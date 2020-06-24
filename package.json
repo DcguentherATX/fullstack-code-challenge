@@ -1,0 +1,36 @@
+{
+  "name": "fullstack-code-challenge",
+  "version": "1.0.0",
+  "description": "Create an application in **Javascript/NodeJS** that allows users to enter a search term for a food category (e.g. sushi, burgers) and a city to search around and returns a \"food tour\" of the highest rated locations that category.",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack -d --watch",
+    "start": "nodemon server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DcguentherATX/fullstack-code-challenge.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DcguentherATX/fullstack-code-challenge/issues"
+  },
+  "homepage": "https://github.com/DcguentherATX/fullstack-code-challenge#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "@babel/preset-react": "^7.10.1",
+    "babel-loader": "^8.1.0",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  }
+}
