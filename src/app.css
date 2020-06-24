@@ -10,30 +10,24 @@ body {
     margin: 0;
 }
 
+#root {
+    height: 100%;
+}
+
 .grid-container {
     display: grid;
     grid-template-areas: 
         "header"
-        "searchbar"
         "main"
         "footer";
-        grid-template-rows: 5rem 5rem 1fr 5rem;
-        grid-template-columns: 1fr;
-        height: 100%;
+    grid-template-rows: 5rem 1fr 5rem;
+    grid-template-columns: 1fr;
+    height: 100%;
 }
 
 header {
     grid-area: header;
     background-color: var(--indigo-blue);
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-searchbar {
-    grid-area: searchbar;
-    background-color: var(--dark-olive);
     color: #ffffff;
     display: flex;
     justify-content: center;
@@ -64,4 +58,51 @@ footer {
 
 .sidebar {
     flex: 1 20rem;
+}
+
+button {
+    background-color: var(--yellow-orange-wheel);
+    color: var(--indigo-blue);
+    padding: .5rem;
+    border-radius: .5rem;
+}
+
+/* SearchBar */
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    background-color: var(--indigo-blue);
+    color: #ffffff;
+    width: 100%;
+    padding: 2rem;
+}
+
+.searchbar {
+    display: flex;
+    width: 90%;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.input-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    padding-bottom: 2em;
+}
+
+input {
+    width: 15rem;
+}
+
+label {
+    margin-right: 1em;
 }
