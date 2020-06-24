@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import '../app.css';
 
 class App extends Component {
     constructor(props) {
@@ -11,7 +12,27 @@ class App extends Component {
 
     render () {
         return (
-            <div>Pearl Food App</div>
+            <div className="grid-container">
+                <header>
+                    Header
+                </header>
+                <searchbar>
+                    Search Bar
+                </searchbar>
+                <main>
+                    <div className="content">
+                        <div className="main">
+                            Main
+                        </div>
+                        <div className="sidebar">
+                            Sidebar
+                        </div>
+                    </div>
+                </main>
+                <footer>
+                    Footer
+                </footer>
+            </div>
         )
     }
 }
