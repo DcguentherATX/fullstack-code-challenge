@@ -1,12 +1,23 @@
 import React from 'react';
+import Card from 'react-bootstrap/Card';
 
 const Restaurant = (props) => {
     return (
         <div>
-            <img src={props.restaurant.image_url} alt={props.restaurant.name}/>
-            <div>{props.restaurant.name}</div>
-            <div>{props.restaurant.price}</div>
-            <div>{props.restaurant.rating}</div>
+            <Card style={{ width: '20rem' }}>
+                <Card.Img variant="top" src={props.restaurant.image_url} />
+                <Card.Body>
+                    <Card.Title>{props.restaurant.name}</Card.Title>
+                    <Card.Text>
+                        <div>
+                            {props.restaurant.rating}
+                        </div>
+                        <div>
+                            {props.restaurant.price}
+                        </div>
+                    </Card.Text>
+                </Card.Body>
+            </Card>
         </div>
     )
 }

@@ -57,7 +57,6 @@ class App extends Component {
                     </div>
                     <div className="content">
                         <div className="main">
-                            Main
                             <Restaurants restaurants={this.state.restaurants}/>
                         </div>
                         <div className="sidebar">
