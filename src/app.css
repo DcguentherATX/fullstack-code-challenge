@@ -68,13 +68,22 @@ footer {
 
 .sidebar {
     flex: 1 20rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-button {
+/* button {
     background-color: var(--primary-accent);
     color: var(--primary-color);
     padding: .5rem;
     border-radius: .5rem;
+} */
+
+h5 {
+    font-family: 'Cinzel Decorative', Arial, Helvetica, cursive;
+    padding: 2.5rem;
+    text-align: center;
 }
 
 /* SearchBar */
@@ -185,4 +194,33 @@ label {
 
 .rating {
     margin-right: .5rem;
+}
+
+/* Crawl List */
+
+.crawl-list {
+    width: 100%;
+}
+
+.crawl-item {
+    display: flex;
+    padding: 1.5rem;
+    font-size: 1rem;
+    justify-content: space-between;
+}
+
+.crawl-image {
+    width: 8rem;
+    height: 6.5rem;
+    margin-right: 1rem;
+}
+
+.crawl-info {
+    display: flex;
+}
+
+.crawl-button-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
