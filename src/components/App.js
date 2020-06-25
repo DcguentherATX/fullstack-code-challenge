@@ -57,7 +57,7 @@ class App extends Component {
                             <Restaurants restaurants={this.state.restaurants}/>
                         </div>
                         <div className="sidebar">
-                            Sidebar
+                            There are no locations for your food crawl.
                         </div>
                     </div>
                 </main>

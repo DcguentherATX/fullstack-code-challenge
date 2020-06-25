@@ -53,6 +53,7 @@ footer {
 }
 
 .main {
+    height: 100%;
     flex: 3 60rem;
 }
 
@@ -105,4 +106,8 @@ input {
 
 label {
     margin-right: 1em;
+}
+
+.sidebar {
+    border-left: .1rem grey solid;
 }
