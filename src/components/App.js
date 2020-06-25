@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import '../app.css';
 import SearchBar from './SearchBar';
+import Axios from 'axios';
+import Restaurants from './Restaurants';
 
 class App extends Component {
     constructor(props) {
@@ -8,7 +10,8 @@ class App extends Component {
 
         this.state = {
             location: '',
-            cuisine: ''
+            cuisine: '',
+            restaurants: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -23,7 +26,20 @@ class App extends Component {
     handleClick(e) {
         e.preventDefault();
 
-        console.log(this.state.location, this.state.cuisine);
+        Axios.get('/api', {
+            params: {
+                location: this.state.location,
+                cuisine: this.state.cuisine
+            }
+        })
+        .then((response) => {
+            this.setState({
+                restaurants: response.data.businesses
+            })
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
     render () {
@@ -38,7 +54,7 @@ class App extends Component {
                         <SearchBar handleChange={this.handleChange} handleClick={this.handleClick} />
                     </div>
                         <div className="main">
-                            Main
+                            <Restaurants restaurants={this.state.restaurants}/>
                         </div>
                         <div className="sidebar">
                             Sidebar
