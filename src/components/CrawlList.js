@@ -6,7 +6,7 @@ import remove from '../../images/remove-button.png';
 
 
 const CrawlList = (props) => {
-    console.log(props);
+    // console.log(props);
     return (
         <div className="crawl-list">
             {props.crawl.map((crawlItem, index) => (

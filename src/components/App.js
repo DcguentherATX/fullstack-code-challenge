@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Button from 'react-bootstrap/Button';
 import '../app.css';
 import SearchBar from './SearchBar';
 import Axios from 'axios';
@@ -13,12 +14,15 @@ class App extends Component {
             location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
             cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
             restaurants: localStorage.getItem("restaurants") ? JSON.parse(localStorage.getItem("restaurants")) : [],
-            crawl: []
+            crawl: [],
+            favorites: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.addToCrawl = this.addToCrawl.bind(this);
         this.getCrawl = this.getCrawl.bind(this);
+        this.showFavoriteButton = this.showFavoriteButton.bind(this);
+        this.addToFavorites = this.addToFavorites.bind(this);
     }
 
     handleChange(e) {
@@ -74,13 +78,37 @@ class App extends Component {
             )
         } else if (this.state.crawl.length === 1) {
             return (
-            <h5>You currently have 1 location in your food crawl.</h5>
+                <h5>You currently have 1 location in your food crawl.</h5>
             )
         } else {
             return (
-            <h5>You currently have {this.state.crawl.length} locations in your food crawl.</h5>
+                <h5>You currently have {this.state.crawl.length} locations in your food crawl.</h5>
             )
         }
+    }
+
+    // shows add to favorites button
+
+    showFavoriteButton() {
+        if (this.state.crawl.length > 0) {
+            return (
+                <Button variant="primary" onClick={(e) => this.addToFavorites(e)}>Add This Crawl to Favorites</Button>
+                )
+        }
+    }
+
+    // add to favorites
+
+    addToFavorites(e) {
+        e.preventDefault();
+
+        const favorites = this.state.favorites.slice();
+        favorites.push(this.state.crawl);
+        console.log(favorites)
+
+        this.setState({
+            favorites: favorites
+        })
     }
 
     render () {
@@ -105,6 +133,9 @@ class App extends Component {
                                 {this.getCrawl()}
                             </div>
                             <CrawlList crawl={this.state.crawl} />
+                            <div>
+                                {this.showFavoriteButton()}
+                            </div>
                         </div>
                     </div>
                     </div>

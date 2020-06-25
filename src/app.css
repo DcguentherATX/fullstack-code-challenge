@@ -71,6 +71,7 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding-bottom: 2rem;
 }
 
 /* button {
@@ -79,6 +80,16 @@ footer {
     padding: .5rem;
     border-radius: .5rem;
 } */
+
+.btn-primary {
+    background-color: var(--primary-color) !important;
+}
+
+.btn-primary:hover {
+    background-color: #ffffff !important;
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
 
 h3, h5 {
     font-family: 'Cinzel Decorative', Arial, Helvetica, cursive;
