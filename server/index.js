@@ -5,6 +5,7 @@ const port = 3000;
 const request = require('request');
 const yelp = require('yelp-fusion');
 require('dotenv').config();
+const apiKey = process.env.API_KEY;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -12,9 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', express.static('public'));
 
 app.get('/api', (req, res) => {
-    const { location } = req.query;
-    const { cuisine } = req.query;
-    const apiKey = '';
+    const { location, cuisine } = req.query;
 
     const searchRequest = {
         term: cuisine,

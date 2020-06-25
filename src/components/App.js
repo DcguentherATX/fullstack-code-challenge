@@ -46,19 +46,24 @@ class App extends Component {
         return (
             <div className="grid-container">
                 <header>
-                    The Pearl Food Crawl Experience
+                    <div>
+                        The Pearl Food Crawl Experience
+                    </div>
                 </header>
                 <main>
-                    <div className="content">
+                    <div className='main-wrapper'>
                     <div className="search-container">
                         <SearchBar handleChange={this.handleChange} handleClick={this.handleClick} />
                     </div>
+                    <div className="content">
                         <div className="main">
+                            Main
                             <Restaurants restaurants={this.state.restaurants}/>
                         </div>
                         <div className="sidebar">
                             There are no locations for your food crawl.
                         </div>
+                    </div>
                     </div>
                 </main>
                 <footer>

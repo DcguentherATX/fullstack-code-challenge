@@ -1,17 +1,20 @@
 :root {
-    --indigo-blue: #0c4767;
-    --dark-olive: #566e3d;
-    --yellow-orange-wheel: #fe9720;
-    --june-bud: #c5d86d;
+    --primary-color: #0c4767;
+    --seconday-color: #566e3d;
+    --primary-accent: #fe9720;
+    --secondary-accent: #c5d86d;
 }
 
 body {
     height: 100vh;
     margin: 0;
+    font-family: 'Nunito', Arial, Helvetica, sans-serif;
+    font-size: 1.25rem;
+    font-weight: 400;
 }
 
 #root {
-    height: 100%;
+    height: 100vh;
 }
 
 .grid-container {
@@ -20,18 +23,22 @@ body {
         "header"
         "main"
         "footer";
-    grid-template-rows: 5rem 1fr 5rem;
+    grid-template-rows: 7rem 1fr 5rem;
     grid-template-columns: 1fr;
     height: 100%;
 }
 
 header {
     grid-area: header;
-    background-color: var(--indigo-blue);
+    background-color: var(--primary-color);
     color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 1.4rem;
+    font-family: 'Cinzel Decorative', Arial, Helvetica, cursive;
+    font-size: 3rem;
+    font-weight: 400;
 }
 
 main {
@@ -40,20 +47,22 @@ main {
 
 footer {
     grid-area: footer;
-    background-color: var(--indigo-blue);
+    background-color: var(--primary-color);
     color: #ffffff;
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-shrink: 0;
 }
 
 .content {
     display: flex;
     flex-wrap: wrap;
+    flex: 1 0 auto;
 }
 
 .main {
-    height: 100%;
+    /* height: 100%; */
     flex: 3 60rem;
 }
 
@@ -62,8 +71,8 @@ footer {
 }
 
 button {
-    background-color: var(--yellow-orange-wheel);
-    color: var(--indigo-blue);
+    background-color: var(--primary-accent);
+    color: var(--primary-color);
     padding: .5rem;
     border-radius: .5rem;
 }
@@ -73,10 +82,9 @@ button {
 .search-container {
     display: flex;
     justify-content: center;
-    background-color: var(--indigo-blue);
+    background-color: var(--primary-color);
     color: #ffffff;
-    width: 100%;
-    padding: 2rem;
+    padding: 1.5rem;
 }
 
 .searchbar {
@@ -108,6 +116,13 @@ label {
     margin-right: 1em;
 }
 
+.main-wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
 .sidebar {
     border-left: .1rem grey solid;
 }
+
