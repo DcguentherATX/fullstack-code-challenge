@@ -37,6 +37,7 @@
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
+    "react-star-ratings": "^2.3.0",
     "request": "^2.88.2",
     "style-loader": "^1.2.1",
     "yelp-fusion": "^3.0.0"

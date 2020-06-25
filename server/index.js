@@ -18,7 +18,8 @@ app.get('/api', (req, res) => {
     const searchRequest = {
         term: cuisine,
         location: location,
-        limit: 20
+        limit: 20,
+        categories: 'restaurants, all'
     };
 
     const client = yelp.client(apiKey);

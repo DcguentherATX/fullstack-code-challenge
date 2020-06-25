@@ -1,4 +1,5 @@
 import React from 'react';
+import Button from 'react-bootstrap/Button';
 
 const SearchBar = (props) => {
     // console.log(props);
@@ -16,7 +17,7 @@ const SearchBar = (props) => {
                 </div>
                 </div>
                 <div>
-                    <button type="submit" onClick={props.handleClick}>Submit</button>
+                    <Button variant="outline-light" onClick={props.handleClick}>Submit</Button>
                 </div>
             </form>
         </div>

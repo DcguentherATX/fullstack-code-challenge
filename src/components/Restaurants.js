@@ -7,11 +7,16 @@ const Restaurants = (props) => {
 
     return (
         <div>
-            <CardDeck>
-                {props.restaurants.map((restaurant, index) => (
-                    <Restaurant key={index} restaurant={restaurant} />
-                ))}
-            </CardDeck>
+            <div className="results">
+                Showing results for {props.cuisine} in {props.location}
+            </div>
+            <div className='card-deck-container'>
+                <CardDeck>
+                    {props.restaurants.map((restaurant, index) => (
+                        <Restaurant key={index} restaurant={restaurant} />
+                    ))}
+                </CardDeck>
+            </div>
         </div>
     )
 }

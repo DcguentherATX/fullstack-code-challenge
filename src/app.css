@@ -109,7 +109,7 @@ form {
 }
 
 input {
-    width: 15rem;
+    width: 20rem;
 }
 
 label {
@@ -126,3 +126,63 @@ label {
     border-left: .1rem grey solid;
 }
 
+/* Card Deck Container */
+
+.results {
+    width: 100%;
+    text-align: center;
+    padding-top: 2rem;
+}
+
+.card-deck-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.card-container {
+    margin-bottom: 1em;
+}
+
+.card {
+    margin: 1.2rem;
+    padding: 1rem;
+    background-color: var(--primary-color);
+    color: #EFF6EE;
+}
+
+.card-body {
+    padding: 1rem;
+}
+
+.card-deck {
+    justify-content: center;
+}
+
+.card-img-container {
+    height: 15rem;
+    width: auto;
+    overflow: hidden;
+}
+
+.card-img-top {
+    height: auto;
+    width: 400px;
+}
+
+.card-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding-top: .75rem;
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: .5rem;
+}
+
+.rating {
+    margin-right: .5rem;
+}

@@ -9,9 +9,9 @@ class App extends Component {
         super(props);
 
         this.state = {
-            location: '',
-            cuisine: '',
-            restaurants: []
+            location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
+            cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
+            restaurants: localStorage.getItem("restaurants") ? JSON.parse(localStorage.getItem("restaurants")) : []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -21,6 +21,8 @@ class App extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
+        localStorage.setItem(e.target.name.toString(), JSON.stringify(e.target.value));
+
     }
 
     handleClick(e) {
@@ -36,6 +38,8 @@ class App extends Component {
             this.setState({
                 restaurants: response.data.businesses
             })
+            localStorage.setItem("restaurants", JSON.stringify(response.data.businesses));
+
         })
         .catch((err) => {
             console.log(err);
@@ -57,7 +61,7 @@ class App extends Component {
                     </div>
                     <div className="content">
                         <div className="main">
-                            <Restaurants restaurants={this.state.restaurants}/>
+                            <Restaurants restaurants={this.state.restaurants} location={this.state.location} cuisine={this.state.cuisine}/>
                         </div>
                         <div className="sidebar">
                             There are no locations for your food crawl.
