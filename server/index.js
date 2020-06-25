@@ -18,7 +18,7 @@ app.get('/api', (req, res) => {
     const searchRequest = {
         term: cuisine,
         location: location,
-        limit: 20,
+        limit: 24,
         categories: 'restaurants, all'
     };
 

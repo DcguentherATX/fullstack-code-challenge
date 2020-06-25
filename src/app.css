@@ -80,7 +80,7 @@ footer {
     border-radius: .5rem;
 } */
 
-h5 {
+h3, h5 {
     font-family: 'Cinzel Decorative', Arial, Helvetica, cursive;
     padding: 2.5rem;
     text-align: center;
@@ -223,4 +223,24 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+}
+
+.clip,
+.card-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.clip {
+    width: 8rem;
+}
+
+.card-title {
+    width: 100%;
+}
+
+.crawl-button-list img {
+    height: 1.5rem;
+    width: 1.5rem;
 }

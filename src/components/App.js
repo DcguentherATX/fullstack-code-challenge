@@ -18,6 +18,7 @@ class App extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.addToCrawl = this.addToCrawl.bind(this);
+        this.getCrawl = this.getCrawl.bind(this);
     }
 
     handleChange(e) {
@@ -51,6 +52,8 @@ class App extends Component {
         })
     }
 
+    // adds target restaurant to crawl list
+
     addToCrawl(e) {
         const index = e.target.value;
         let crawl = this.state.crawl.slice();
@@ -59,6 +62,25 @@ class App extends Component {
         this.setState({
             crawl: crawl
         })
+        this.getCrawl();
+    }
+
+    // updates the number of locations in the crawl
+
+    getCrawl() {
+        if (this.state.crawl.length === 0) {
+            return (
+                <h5>There are currently no locations in your food crawl.</h5>
+            )
+        } else if (this.state.crawl.length === 1) {
+            return (
+            <h5>You currently have 1 location in your food crawl.</h5>
+            )
+        } else {
+            return (
+            <h5>You currently have {this.state.crawl.length} locations in your food crawl.</h5>
+            )
+        }
     }
 
     render () {
@@ -79,7 +101,9 @@ class App extends Component {
                             <Restaurants restaurants={this.state.restaurants} location={this.state.location} cuisine={this.state.cuisine} addToCrawl={this.addToCrawl} />
                         </div>
                         <div className="sidebar">
-                            <h5>There are currently no entries for your food crawl.</h5>
+                            <div>
+                                {this.getCrawl()}
+                            </div>
                             <CrawlList crawl={this.state.crawl} />
                         </div>
                     </div>
