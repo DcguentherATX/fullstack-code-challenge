@@ -1,6 +1,7 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
 import Fade from 'react-reveal/Fade';
+import convertToDollars from '../util';
 
 import upArrow from '../../images/up-arrow.png';
 import downArrow from '../../images/down-arrow.png';
@@ -18,7 +19,7 @@ const CrawlList = (props) => {
                     <img className="crawl-image" src={crawlItem.image_url} alt={crawlItem.name} />
                     <div>
                         <div className="clip">{crawlItem.name}</div>
-                        <div>{crawlItem.price}</div>
+                        <div>{convertToDollars(crawlItem.price)}</div>
                         <StarRatings
                                 rating={crawlItem.rating}
                                 starRatedColor="#fe9720"

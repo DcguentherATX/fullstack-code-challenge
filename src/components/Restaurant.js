@@ -2,6 +2,8 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import StarRatings from 'react-star-ratings';
+import convertToDollars from '../util';
+import rated from '../util';
 
 const Restaurant = (props) => {
     // console.log(props);
@@ -27,7 +29,7 @@ const Restaurant = (props) => {
                         </span>
                     </div>
                     <span>
-                        Price: {props.restaurant.price}
+                        Price: {convertToDollars(props.restaurant.price)}
                     </span>
                     <div className="card-buttons">
                         <Button variant="outline-light">

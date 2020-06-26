@@ -19,7 +19,8 @@ class App extends Component {
             restaurants: localStorage.getItem("restaurants") ? JSON.parse(localStorage.getItem("restaurants")) : [],
             crawl: [],
             favorites: [],
-            filter: ''
+            filter: '',
+            searchTitle: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -70,8 +71,12 @@ class App extends Component {
             })
 
             this.setState({
-                restaurants: response.data.businesses
+                restaurants: response.data.businesses,
+                searchTitle: [this.state.cuisine, this.state.location]
             })
+            if (this.state.searchTitle.length > 0) {
+                document.getElementById('show-results').style.display = 'block';
+            }
             localStorage.setItem("restaurants", JSON.stringify(response.data.businesses));
 
         })
@@ -174,7 +179,7 @@ class App extends Component {
                     </div>
                     <div className="content">
                         <div className="main">
-                        <h3>Showing results for <strong>{this.state.cuisine}</strong> near <strong>{this.state.location}</strong></h3>
+                        <h3 id="show-results" >Showing results for <strong>{this.state.searchTitle[0]}</strong> near <strong>{this.state.searchTitle[1]}</strong></h3>
                         <div>
                             <Sort restaurants={this.state.restaurants} sortResults={this.sortResults} />
                         </div>

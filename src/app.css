@@ -113,6 +113,10 @@ h3, h5 {
     justify-content: center;
 }
 
+#show-results {
+    display: none;
+}
+
 form {
     display: flex;
     flex-direction: column;
