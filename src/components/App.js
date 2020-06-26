@@ -5,6 +5,7 @@ import SearchBar from './SearchBar';
 import Axios from 'axios';
 import Restaurants from './Restaurants';
 import CrawlList from './CrawlList';
+import Fade from 'react-reveal/Fade';
 
 class App extends Component {
     constructor(props) {
@@ -13,6 +14,7 @@ class App extends Component {
         this.state = {
             location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
             cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
+            radius: localStorage.getItem("radius") ? JSON.parse(localStorage.getItem("radius")) : 0,
             restaurants: localStorage.getItem("restaurants") ? JSON.parse(localStorage.getItem("restaurants")) : [],
             crawl: [],
             favorites: []
@@ -38,10 +40,17 @@ class App extends Component {
     handleClick(e) {
         e.preventDefault();
 
+        if (Number(this.state.radius) > 40000) {
+            this.setState({
+                radius: 40000
+            })
+        };
+
         Axios.get('/api', {
             params: {
                 location: this.state.location,
-                cuisine: this.state.cuisine
+                radius: this.state.radius,
+                cuisine: this.state.cuisine,
             }
         })
         .then((response) => {
@@ -59,9 +68,14 @@ class App extends Component {
     // adds target restaurant to crawl list
 
     addToCrawl(e) {
-        const index = e.target.value;
+        const id = e.target.value;
         let crawl = this.state.crawl.slice();
-        crawl.push(this.state.restaurants[index]);
+
+        this.state.restaurants.forEach((restaurant) => {
+            if (restaurant.id === id) {
+                crawl.push(restaurant);
+            }
+        });
 
         this.setState({
             crawl: crawl
@@ -92,7 +106,9 @@ class App extends Component {
     showFavoriteButton() {
         if (this.state.crawl.length > 0) {
             return (
-                <Button variant="primary" onClick={(e) => this.addToFavorites(e)}>Add This Crawl to Favorites</Button>
+                <Fade bottom cascade>
+                    <Button variant="primary" onClick={(e) => this.addToFavorites(e)}>Add This Crawl to Favorites</Button>
+                </Fade>
                 )
         }
     }
@@ -104,7 +120,6 @@ class App extends Component {
 
         const favorites = this.state.favorites.slice();
         favorites.push(this.state.crawl);
-        console.log(favorites)
 
         this.setState({
             favorites: favorites

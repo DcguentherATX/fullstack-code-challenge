@@ -13,11 +13,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/', express.static('public'));
 
 app.get('/api', (req, res) => {
-    const { location, cuisine } = req.query;
+    const { location, cuisine, radius } = req.query;
+    console.log(location, cuisine, radius);
 
     const searchRequest = {
         term: cuisine,
         location: location,
+        radius: radius,
         limit: 24,
         categories: 'restaurants, all'
     };

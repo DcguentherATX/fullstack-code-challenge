@@ -32,7 +32,7 @@ const Restaurant = (props) => {
                         <Button variant="outline-light">
                             More Info
                         </Button>
-                        <Button variant="outline-light" value={props.index} onClick={(e) => props.addToCrawl(e)}>
+                        <Button variant="outline-light" value={props.restaurant.id} onClick={(e) => props.addToCrawl(e)}>
                             Add to Crawl
                         </Button>
                     </div>

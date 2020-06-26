@@ -1,5 +1,7 @@
 import React from 'react';
 import StarRatings from 'react-star-ratings';
+import Fade from 'react-reveal/Fade';
+
 import upArrow from '../../images/up-arrow.png';
 import downArrow from '../../images/down-arrow.png';
 import remove from '../../images/remove-button.png';
@@ -10,6 +12,7 @@ const CrawlList = (props) => {
     return (
         <div className="crawl-list">
             {props.crawl.map((crawlItem, index) => (
+                <Fade right cascade>
                 <div className="crawl-item" key={index}>
                     <div className="crawl-info">
                     <img className="crawl-image" src={crawlItem.image_url} alt={crawlItem.name} />
@@ -30,8 +33,9 @@ const CrawlList = (props) => {
                         <img src={upArrow} alt="upArrow" />
                         <img src={remove} alt="remove-button" />
                         <img src={downArrow} alt="downArrow" />
-                    </div>                
+                    </div>                                   
                 </div>
+            </Fade> 
             ))}
         </div>
     )
