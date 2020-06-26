@@ -255,3 +255,11 @@ label {
     height: 1.5rem;
     width: 1.5rem;
 }
+
+/* Filter */
+
+.sort-container {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 5rem;
+}
