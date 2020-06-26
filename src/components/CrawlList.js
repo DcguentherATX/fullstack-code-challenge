@@ -2,6 +2,8 @@ import React from 'react';
 import StarRatings from 'react-star-ratings';
 import Fade from 'react-reveal/Fade';
 import convertToDollars from '../util';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip'
 
 import upArrow from '../../images/up-arrow.png';
 import downArrow from '../../images/down-arrow.png';
@@ -35,9 +37,37 @@ const CrawlList = (props) => {
                     </div>
                     </div>
                     <div className="crawl-button-list" index={index} >
-                        <img onClick={(e) => props.swap(e)} value="up" src={upArrow} alt="upArrow" />
+                    <OverlayTrigger
+                        key={'up'}
+                        placement={'left'}
+                        overlay={
+                        <Tooltip id={`tooltip-left`}>
+                            Move Item Up
+                        </Tooltip>
+                        }
+                    >
+                    <img onClick={(e) => props.swap(e)} value="up" src={upArrow} alt="upArrow" />
+                    </OverlayTrigger>
+                    <OverlayTrigger 
+                        key={'remove'}
+                        placement={'left'}
+                        overlay={
+                            <Tooltip id={'tooltip-left'} >
+                                Remove Item
+                            </Tooltip>
+                        }>
                         <img onClick={(e) => props.deleteCrawlItem(e)} value="remove" src={remove} alt="remove-button" />
-                        <img onClick={(e) => props.swap(e)} value="down" src={downArrow} alt="downArrow" />
+                        </OverlayTrigger>
+                        <OverlayTrigger
+                            key={'down'}
+                            placement={'left'}
+                            overlay={
+                                <Tooltip id={'tooltip-left'}>
+                                    Move Item Down
+                                </Tooltip>
+                            }>
+                            <img onClick={(e) => props.swap(e)} value="down" src={downArrow} alt="downArrow" />
+                        </OverlayTrigger>
                     </div>                                   
                 </div>
             </Fade> 

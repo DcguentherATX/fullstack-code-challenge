@@ -3,7 +3,6 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import StarRatings from 'react-star-ratings';
 import convertToDollars from '../util';
-import rated from '../util';
 
 const Restaurant = (props) => {
     // console.log(props);
