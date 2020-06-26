@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import StarRatings from 'react-star-ratings';
 
 const Restaurant = (props) => {
+    // console.log(props);
     return (
         <div className="card-container">
             <Card style={{ width: '22rem' }}>

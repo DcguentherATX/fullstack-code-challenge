@@ -1,25 +1,18 @@
 import React from 'react';
 import Restaurant from './Restaurant';
-import Sort from './Sort';
 import CardDeck from 'react-bootstrap/CardDeck';
 
 const Restaurants = (props) => {
     // console.log('props', props);
 
     return (
-        <div>
-            <h3>Showing results for <strong>{props.cuisine}</strong> near <strong>{props.location}</strong></h3>
-            <div>
-                <Sort restaurants={props.restaurants} />
-            </div>
             <div className='card-deck-container'>
                 <CardDeck>
                     {props.restaurants.map((restaurant, index) => (
-                        <Restaurant key={index} index={index} restaurant={restaurant} addToCrawl={props.addToCrawl} />
+                        <Restaurant key={index} restaurant={restaurant} addToCrawl={props.addToCrawl} />
                     ))}
                 </CardDeck>
             </div>
-        </div>
     )
 }
 

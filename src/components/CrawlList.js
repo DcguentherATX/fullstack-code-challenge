@@ -12,7 +12,7 @@ const CrawlList = (props) => {
     return (
         <div className="crawl-list">
             {props.crawl.map((crawlItem, index) => (
-                <Fade right cascade>
+                <Fade right cascade key={index}>
                 <div className="crawl-item" key={index}>
                     <div className="crawl-info">
                     <img className="crawl-image" src={crawlItem.image_url} alt={crawlItem.name} />

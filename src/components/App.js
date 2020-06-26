@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import '../app.css';
 import SearchBar from './SearchBar';
 import Axios from 'axios';
+import Sort from './Sort';
 import Restaurants from './Restaurants';
 import CrawlList from './CrawlList';
 import Fade from 'react-reveal/Fade';
@@ -17,7 +18,8 @@ class App extends Component {
             radius: localStorage.getItem("radius") ? JSON.parse(localStorage.getItem("radius")) : 0,
             restaurants: localStorage.getItem("restaurants") ? JSON.parse(localStorage.getItem("restaurants")) : [],
             crawl: [],
-            favorites: []
+            favorites: [],
+            filter: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -25,6 +27,7 @@ class App extends Component {
         this.getCrawl = this.getCrawl.bind(this);
         this.showFavoriteButton = this.showFavoriteButton.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
+        this.sortResults = this.sortResults.bind(this);
     }
 
     handleChange(e) {
@@ -126,6 +129,24 @@ class App extends Component {
         })
     }
 
+    sortResults(e) {
+        const sort = event.target.value;
+        console.log(event.target.value);
+    
+        this.setState((state) => ({
+          filter: sort,
+          restaurants: this.state.restaurants.slice().sort((a, b) => (
+            sort === "lowest" ? ((a.rating > b.rating) ? 1 : -1) :
+            sort === "highest" ? ((a.rating < b.rating) ? 1 : -1) :
+            sort === "closest" ? ((a.distance > b.distance) ? 1 : -1) :
+            sort === "furthest" ? ((a.distance < b.distance) ? 1 : -1) :
+            sort === "cheapest" ? ((a.price > b.price) ? 1 : -1) :
+            sort === "expensive" ? ((a.price < b.price) ? 1 : -1) : 
+            ((a.resultIndex > b.resultIndex) ? 1 : -1)
+          ))
+        }));
+    }
+
     render () {
         return (
             <div className="grid-container">
@@ -141,6 +162,10 @@ class App extends Component {
                     </div>
                     <div className="content">
                         <div className="main">
+                        <h3>Showing results for <strong>{this.state.cuisine}</strong> near <strong>{this.state.location}</strong></h3>
+                        <div>
+                            <Sort restaurants={this.state.restaurants} sortResults={this.sortResults} />
+                        </div>
                             <Restaurants restaurants={this.state.restaurants} location={this.state.location} cuisine={this.state.cuisine} addToCrawl={this.addToCrawl} />
                         </div>
                         <div className="sidebar">

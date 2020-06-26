@@ -6,17 +6,17 @@ const Sort = (props) => {
             <div className="distance-sort">
                 Distance:  
                 {" "}
-                <select >
-                    <option value=""></option>
-                    <option value="lowest">Closest</option>
-                    <option value="highest">Furthest</option>
+                <select onChange={(e) => props.sortResults(e)}>
+                    <option value="default">Default</option>
+                    <option value="closest">Closest</option>
+                    <option value="furthest">Furthest</option>
                 </select>
             </div>
             <div className="rating-sort">
                 Rating:
                 {" "}
-                <select >
-                    <option value=""></option>
+                <select onChange={(e) => props.sortResults(e)}>
+                    <option value="default">Default</option>
                     <option value="lowest">Lowest</option>
                     <option value="highest">Highest</option>
                 </select>
@@ -24,10 +24,10 @@ const Sort = (props) => {
             <div className="price-sort">
                 Price:
                 {" "}
-                <select >
-                    <option value=""></option>
-                    <option value="lowest">Cheapest</option>
-                    <option value="highest">Expensive</option>
+                <select onChange={(e) => props.sortResults(e)}>
+                    <option value="default">Default</option>
+                    <option value="cheapest">Cheapest</option>
+                    <option value="expensive">Expensive</option>
                 </select>
             </div>
         </div>
