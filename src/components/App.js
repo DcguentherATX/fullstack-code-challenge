@@ -7,6 +7,9 @@ import Sort from './Sort';
 import Restaurants from './Restaurants';
 import CrawlList from './CrawlList';
 import Fade from 'react-reveal/Fade';
+import swal from '@sweetalert/with-react';
+
+import remove from '../../images/remove-button.png';
 
 class App extends Component {
     constructor(props) {
@@ -92,12 +95,42 @@ class App extends Component {
     addToCrawl(e) {
         const id = e.target.value;
         let crawl = this.state.crawl.slice();
+        let inCrawl = false;
 
-        this.state.restaurants.forEach((restaurant) => {
-            if (restaurant.id === id) {
-                crawl.push(restaurant);
+        this.state.crawl.forEach((item) => {
+            if (item.id === id) {
+                inCrawl = true;
             }
-        });
+        })
+
+        if (!inCrawl) {
+            this.state.restaurants.forEach((restaurant) => {
+                if (restaurant.id === id) {
+                    crawl.push(restaurant);
+                }
+            });
+        } else {
+            swal({
+                title: "Are you sure?",
+                text: "This restaurant is already included in your current food crawl!",
+                icon: "warning",
+                buttons: ["Cancel", "Continue"],
+                dangerMode: true,
+            })
+            .then((response) => {
+                if (response) {
+                    this.state.restaurants.forEach((restaurant) => {
+                        if (restaurant.id === id) {
+                            crawl.push(restaurant);
+                        }
+                    })
+                }
+
+                this.setState({
+                    crawl: crawl
+                })
+            });
+        };
 
         this.setState({
             crawl: crawl
