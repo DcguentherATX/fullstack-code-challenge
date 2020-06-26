@@ -260,6 +260,10 @@ label {
     width: 1.5rem;
 }
 
+.crawl-button-list img:hover {
+    cursor: pointer;
+}
+
 /* Filter */
 
 .sort-container {

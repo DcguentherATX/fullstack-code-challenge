@@ -7,6 +7,10 @@ import upArrow from '../../images/up-arrow.png';
 import downArrow from '../../images/down-arrow.png';
 import remove from '../../images/remove-button.png';
 
+const swap = (e) => {
+    console.log(e.target)
+}
+
 
 const CrawlList = (props) => {
     // console.log(props);
@@ -14,7 +18,7 @@ const CrawlList = (props) => {
         <div className="crawl-list">
             {props.crawl.map((crawlItem, index) => (
                 <Fade right cascade key={index}>
-                <div className="crawl-item" key={index}>
+                <div className="crawl-item" key={index} >
                     <div className="crawl-info">
                     <img className="crawl-image" src={crawlItem.image_url} alt={crawlItem.name} />
                     <div>
@@ -30,10 +34,10 @@ const CrawlList = (props) => {
                         />
                     </div>
                     </div>
-                    <div className="crawl-button-list">
-                        <img src={upArrow} alt="upArrow" />
+                    <div className="crawl-button-list" index={index} >
+                        <img onClick={(e) => props.swap(e)} value="up" src={upArrow} alt="upArrow" />
                         <img src={remove} alt="remove-button" />
-                        <img src={downArrow} alt="downArrow" />
+                        <img onClick={(e) => props.swap(e)} value="down" src={downArrow} alt="downArrow" />
                     </div>                                   
                 </div>
             </Fade> 

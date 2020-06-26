@@ -29,6 +29,7 @@ class App extends Component {
         this.showFavoriteButton = this.showFavoriteButton.bind(this);
         this.addToFavorites = this.addToFavorites.bind(this);
         this.sortResults = this.sortResults.bind(this);
+        this.swap = this.swap.bind(this);
     }
 
     handleChange(e) {
@@ -164,6 +165,39 @@ class App extends Component {
         }));
     }
 
+    // reordering function for items in crawl list
+
+    swap(e) {
+        const dir = e.target.getAttribute('value');
+        const index = Number(e.target.parentNode.getAttribute('index'));
+        const crawl = this.state.crawl.slice();
+        // console.log(dir, index);
+
+        if (dir === 'up') {
+            if (index === 0) {
+                let current = crawl.shift();
+                crawl.push(current);
+            } else {
+                let current = crawl[index];
+                crawl[index] = crawl[index - 1];
+                crawl[index - 1] = current;
+            }
+        } else {
+            if (index === crawl.length - 1) {
+                let current = crawl.pop();
+                crawl.unshift(current);
+            } else {
+                let current = crawl[index];
+                crawl[index] = crawl[index + 1];
+                crawl[index + 1] = current;
+            }
+        }
+        // console.log('postswap', crawl)
+        this.setState({
+            crawl: crawl
+        })
+    }
+
     render () {
         return (
             <div className="grid-container">
@@ -189,7 +223,7 @@ class App extends Component {
                             <div>
                                 {this.getCrawl()}
                             </div>
-                            <CrawlList crawl={this.state.crawl} />
+                            <CrawlList crawl={this.state.crawl} swap={this.swap} />
                             <div>
                                 {this.showFavoriteButton()}
                             </div>
