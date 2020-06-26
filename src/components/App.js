@@ -30,6 +30,7 @@ class App extends Component {
         this.addToFavorites = this.addToFavorites.bind(this);
         this.sortResults = this.sortResults.bind(this);
         this.swap = this.swap.bind(this);
+        this.deleteCrawlItem = this.deleteCrawlItem.bind(this);
     }
 
     handleChange(e) {
@@ -198,6 +199,16 @@ class App extends Component {
         })
     }
 
+    deleteCrawlItem(e){
+        console.log(e.target.getAttribute('value'));
+        const index = Number(e.target.parentNode.getAttribute('index'));
+        const crawl = this.state.crawl.slice(0, index).concat(this.state.crawl.slice(index + 1));
+        
+        this.setState({
+            crawl: crawl
+        })
+    }
+
     render () {
         return (
             <div className="grid-container">
@@ -223,7 +234,7 @@ class App extends Component {
                             <div>
                                 {this.getCrawl()}
                             </div>
-                            <CrawlList crawl={this.state.crawl} swap={this.swap} />
+                            <CrawlList crawl={this.state.crawl} swap={this.swap} deleteCrawlItem={this.deleteCrawlItem} />
                             <div>
                                 {this.showFavoriteButton()}
                             </div>

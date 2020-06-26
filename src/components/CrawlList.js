@@ -36,7 +36,7 @@ const CrawlList = (props) => {
                     </div>
                     <div className="crawl-button-list" index={index} >
                         <img onClick={(e) => props.swap(e)} value="up" src={upArrow} alt="upArrow" />
-                        <img src={remove} alt="remove-button" />
+                        <img onClick={(e) => props.deleteCrawlItem(e)} value="remove" src={remove} alt="remove-button" />
                         <img onClick={(e) => props.swap(e)} value="down" src={downArrow} alt="downArrow" />
                     </div>                                   
                 </div>
