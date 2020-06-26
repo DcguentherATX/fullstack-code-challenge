@@ -17,7 +17,7 @@ const SearchBar = (props) => {
                 </div>
                 <div>
                     <label htmlFor="radius">Distance: </label>
-                    <input type="number" min="5000" max="40000" step="1000" id="radius" name="radius" placeholder="enter search distance (meters)" required onChange={(e) => props.handleChange(e)}></input>
+                    <input type="number" min="5000" max="40000" step="1000" id="radius" name="radius" placeholder="enter search distance (< 40000)" required onChange={(e) => props.handleChange(e)}></input>
                 </div>
                 </div>
                 <div>

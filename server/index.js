@@ -14,7 +14,7 @@ app.use('/', express.static('public'));
 
 app.get('/api', (req, res) => {
     const { location, cuisine, radius } = req.query;
-    console.log(location, cuisine, radius);
+    // console.log(location, cuisine, radius);
 
     const searchRequest = {
         term: cuisine,

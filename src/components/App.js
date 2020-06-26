@@ -31,6 +31,12 @@ class App extends Component {
     }
 
     handleChange(e) {
+        if (e.target.name === 'radius') {
+            if (Number(e.target.value) > 40000) {
+                e.target.value = 40000;
+            }
+        }
+
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -43,12 +49,6 @@ class App extends Component {
     handleClick(e) {
         e.preventDefault();
 
-        if (Number(this.state.radius) > 40000) {
-            this.setState({
-                radius: 40000
-            })
-        };
-
         Axios.get('/api', {
             params: {
                 location: this.state.location,
@@ -57,6 +57,18 @@ class App extends Component {
             }
         })
         .then((response) => {
+            response.data.businesses.forEach((business, i) => {
+                business.resultIndex = i;
+                if (!business.price) {
+                    business.price = 0;
+                } else {
+                    business.price = business.price.length;
+                }
+                if (!business.rating) {
+                    business.rating = 0;
+                }
+            })
+
             this.setState({
                 restaurants: response.data.businesses
             })
@@ -131,7 +143,6 @@ class App extends Component {
 
     sortResults(e) {
         const sort = event.target.value;
-        console.log(event.target.value);
     
         this.setState((state) => ({
           filter: sort,
@@ -142,6 +153,7 @@ class App extends Component {
             sort === "furthest" ? ((a.distance < b.distance) ? 1 : -1) :
             sort === "cheapest" ? ((a.price > b.price) ? 1 : -1) :
             sort === "expensive" ? ((a.price < b.price) ? 1 : -1) : 
+            sort === "alphabetical" ? ((a.name > b.name) ? 1 : -1) :
             ((a.resultIndex > b.resultIndex) ? 1 : -1)
           ))
         }));

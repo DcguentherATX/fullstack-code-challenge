@@ -30,6 +30,14 @@ const Sort = (props) => {
                     <option value="expensive">Expensive</option>
                 </select>
             </div>
+            <div className="name-sort">
+                Name:
+                {" "}
+                <select onChange={(e) => props.sortResults(e)}>
+                    <option value="default">Default</option>
+                    <option value="alphabetical">Alphabetical</option>
+                </select>
+            </div>
         </div>
     )
 }
