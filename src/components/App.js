@@ -17,16 +17,17 @@ class App extends Component {
         super(props);
 
         this.state = {
-            location: '',
-            cuisine: '',
-            radius: 0,
+            location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
+            cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
+            radius: localStorage.getItem("radius") ? JSON.parse(localStorage.getItem("radius")) : 0,
             restaurants: [],
             crawl: [],
             favorites: [],
             filter: '',
             searchTitle: [],
             listName: '',
-            searchResults: [],
+            searchResults: localStorage.getItem("searchResults") ? JSON.parse(localStorage.getItem("searchResults")) : [],
+            tourNames: []
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -91,7 +92,7 @@ class App extends Component {
                 document.getElementById('show-results').style.display = 'block';
             }
             localStorage.setItem("restaurants", JSON.stringify(response.data.businesses));
-
+            localStorage.setItem("searchResults", JSON.stringify(response.data.businesses))
         })
         .catch((err) => {
             console.log(err);
@@ -234,17 +235,18 @@ class App extends Component {
     addToFavorites(e) {
         e.preventDefault();
 
-        if (!this.state.listName) {
-            alert('please enter a list name');
+        if (!this.state.listName || this.state.tourNames.includes(this.state.listName)) {
+            alert('please enter a unique list name');
         } else {
         // console.log(this.state.listName, this.state.crawl);
         let tour = this.state.crawl.slice();
         let name = this.state.listName;
-
-        let fav = [{
-            name: name,
-            tour: tour
-        }]
+        const tourNames = this.state.tourNames.slice();
+        tourNames.push(name);
+        // let fav = [{
+        //     name: name,
+        //     tour: tour
+        // }]
         // console.log(fav);
         const favorites = this.state.favorites.slice();
         tour.push(name);
@@ -252,6 +254,7 @@ class App extends Component {
 
         this.setState({
             favorites: favorites,
+            tourNames: tourNames
         })
     }
 }
@@ -399,12 +402,4 @@ class App extends Component {
 
 export default App;
 
-// location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
-// cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
-// radius: localStorage.getItem("radius") ? JSON.parse(localStorage.getItem("radius")) : 0,
-// restaurants: localStorage.getItem("restaurants") ? JSON.parse(localStorage.getItem("restaurants")) : [],
-// crawl: [],
-// favorites: [],
-// filter: '',
-// searchTitle: [],
-// listName: ''
+

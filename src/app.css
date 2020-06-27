@@ -119,7 +119,7 @@ h6 {
 }
 
 #show-results {
-    display: block;
+    display: none;
 }
 
 form {
