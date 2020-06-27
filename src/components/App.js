@@ -5,6 +5,7 @@ import SearchBar from './SearchBar';
 import Axios from 'axios';
 import Sort from './Sort';
 import Restaurants from './Restaurants';
+import FavoritesList from './FavoritesList';
 import CrawlList from './CrawlList';
 import Fade from 'react-reveal/Fade';
 import swal from '@sweetalert/with-react';
@@ -23,7 +24,8 @@ class App extends Component {
             crawl: [],
             favorites: [],
             filter: '',
-            searchTitle: []
+            searchTitle: [],
+            listName: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -162,7 +164,15 @@ class App extends Component {
         if (this.state.crawl.length > 0) {
             return (
                 <Fade bottom cascade>
+                    <div className="fav-form">
+                    <form >
+                        <label htmlFor="listName">Enter List Name:</label>
+                        <input type="text" id="listName" name="listName" onChange={(e) => this.handleChange(e)} placeholder="enter name" required={"required"}></input>
+                    </form>
+                    <div className="fav-btn">
                     <Button variant="primary" onClick={(e) => this.addToFavorites(e)}>Add This Crawl to Favorites</Button>
+                    </div>
+                    </div>
                 </Fade>
                 )
         }
@@ -173,13 +183,27 @@ class App extends Component {
     addToFavorites(e) {
         e.preventDefault();
 
+        if (!this.state.listName) {
+            alert('please enter a list name');
+        } else {
+        // console.log(this.state.listName, this.state.crawl);
+        let tour = this.state.crawl.slice();
+        let name = this.state.listName;
+
+        let fav = [{
+            name: name,
+            tour: tour
+        }]
+        // console.log(fav);
         const favorites = this.state.favorites.slice();
-        favorites.push(this.state.crawl);
+        tour.push(name);
+        favorites.push(tour);
 
         this.setState({
             favorites: favorites
         })
     }
+}
 
     sortResults(e) {
         const sort = event.target.value;
@@ -268,8 +292,14 @@ class App extends Component {
                                 {this.getCrawl()}
                             </div>
                             <CrawlList crawl={this.state.crawl} swap={this.swap} deleteCrawlItem={this.deleteCrawlItem} />
-                            <div>
+                            <div className="fav-form-container">
                                 {this.showFavoriteButton()}
+                            </div>
+                            <div className="fav-list-container">
+                                <h5 className="top-line">You currently have {this.state.favorites.length} favorites.</h5>
+                                {this.state.favorites.map((fav) => (
+                                    <FavoritesList fav={fav} />
+                                ))}
                             </div>
                         </div>
                     </div>

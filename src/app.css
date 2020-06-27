@@ -147,7 +147,7 @@ label {
 }
 
 .sidebar {
-    border-left: .1rem grey solid;
+    border-left: .1rem var(--primary-color) solid;
 }
 
 /* Card Deck Container */
@@ -264,10 +264,51 @@ label {
     cursor: pointer;
 }
 
+.fav-btn {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.fav-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    padding: 1rem;
+}
+
+.fav-form-container,
+.fav-list-container {
+    width: 100%;
+}
+
+.top-line {
+    padding-top: 2em;
+    border-top: .1rem var(--primary-color) solid;
+}
+
 /* Filter */
 
 .sort-container {
     display: flex;
     justify-content: space-between;
     padding: 1rem 5rem;
+}
+
+/* Sidebar Favorites */
+
+.tour-list {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+}
+
+.tour-list div {
+    padding-bottom: .25rem;
+}
+
+.fav-list-details {
+    display: flex;
+    flex-direction: column;
 }
