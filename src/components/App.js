@@ -25,7 +25,8 @@ class App extends Component {
             favorites: [],
             filter: '',
             searchTitle: [],
-            listName: ''
+            listName: '',
+            searchResults: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
@@ -38,6 +39,7 @@ class App extends Component {
         this.deleteCrawlItem = this.deleteCrawlItem.bind(this);
         this.clearTour = this.clearTour.bind(this);
         this.showRestaurants = this.showRestaurants.bind(this);
+        this.filterProducts = this.filterProducts.bind(this);
     }
 
     handleChange(e) {
@@ -81,6 +83,7 @@ class App extends Component {
 
             this.setState({
                 restaurants: response.data.businesses,
+                searchResults: response.data.businesses,
                 searchTitle: [this.state.cuisine, this.state.location]
             })
             if (this.state.searchTitle.length > 0) {
@@ -98,7 +101,7 @@ class App extends Component {
 
     addToCrawl(e) {
         const id = e.target.value;
-        console.log('id', id);
+        // console.log('id', id);
         let crawl = this.state.crawl.slice();
         let inCrawl = false;
 
@@ -264,6 +267,33 @@ class App extends Component {
         }));
     }
 
+    // filtering function
+
+    filterProducts(e) {
+        let filter = e.target.value.split('-');
+        let type = filter[0];
+        let score = filter[1];
+        let restaurants = this.state.restaurants.slice();
+        console.log(type, score);
+
+        if (score === "all") {
+            this.setState({
+                restaurants: this.state.searchResults
+            })
+        } else {
+            const filtered = [];
+
+            restaurants.forEach((restaurant) => {
+                if (restaurant[type] >= Number(score) && restaurant[type] < Number(score) + 1) {
+                    filtered.push(restaurant);
+                }
+            })
+            this.setState({
+                restaurants: filtered
+            })
+        } 
+    }
+
     // reordering function for items in crawl list
 
     swap(e) {
@@ -325,7 +355,7 @@ class App extends Component {
                                 <div id="show-results">
                                     <h3>Showing results for <strong>{this.state.searchTitle[0]}</strong> near <strong>{this.state.searchTitle[1]}</strong></h3>
                                     <div>
-                                        <Sort restaurants={this.state.restaurants} sortResults={this.sortResults} />
+                                        <Sort restaurants={this.state.restaurants} sortResults={this.sortResults} filterProducts={this.filterProducts} />
                                     </div>
                                 </div>
                                 <div className="restaurant-container">

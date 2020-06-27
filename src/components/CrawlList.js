@@ -9,10 +9,6 @@ import upArrow from '../../images/up-arrow.png';
 import downArrow from '../../images/down-arrow.png';
 import remove from '../../images/remove-button.png';
 
-const swap = (e) => {
-    console.log(e.target)
-}
-
 
 const CrawlList = (props) => {
     // console.log(props);

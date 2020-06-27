@@ -17,6 +17,32 @@ const Sort = (props) => {
                     <option value="alphabetical">Alphabetical</option>
                 </select>
             </div>
+            <div className="filter-rating">
+                Filter Rating:
+                {" "}
+                <select value="rating" onChange={props.filterProducts}>
+                    <option value=""></option>
+                    <option value="rating-1">1 Star</option>
+                    <option value="rating-2">2 Stars</option>
+                    <option value="rating-3">3 Stars</option>
+                    <option value="rating-4">4 Stars</option>
+                    <option value="rating-5">5 Stars</option>
+                    <option value="rating-all">All</option>
+                </select>
+            </div>
+            <div className="filter-price">
+                Filter Price:
+                {" "}
+                <select value="rating" onChange={props.filterProducts}>
+                    <option value=""></option>
+                    <option value="price-1">1 Dollar Sign</option>
+                    <option value="price-2">2 Dollar Signs</option>
+                    <option value="price-3">3 Dollar Signs</option>
+                    <option value="price-4">4 Dollar Signs</option>
+                    <option value="price-all">All</option>
+                </select>
+            </div>
+            
             {/* <div className="rating-sort">
                 Rating:
                 {" "}
