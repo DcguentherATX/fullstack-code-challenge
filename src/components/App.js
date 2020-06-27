@@ -17,10 +17,10 @@ class App extends Component {
         super(props);
 
         this.state = {
-            location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
-            cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
-            radius: localStorage.getItem("radius") ? JSON.parse(localStorage.getItem("radius")) : 0,
-            restaurants: localStorage.getItem("restaurants") ? JSON.parse(localStorage.getItem("restaurants")) : [],
+            location: '',
+            cuisine: '',
+            radius: 0,
+            restaurants: [],
             crawl: [],
             favorites: [],
             filter: '',
@@ -276,33 +276,37 @@ class App extends Component {
                 </header>
                 <main>
                     <div className='main-wrapper'>
-                    <div className="search-container">
-                        <SearchBar handleChange={this.handleChange} handleClick={this.handleClick} />
-                    </div>
-                    <div className="content">
-                        <div className="main">
-                        <h3 id="show-results" >Showing results for <strong>{this.state.searchTitle[0]}</strong> near <strong>{this.state.searchTitle[1]}</strong></h3>
-                        <div>
-                            <Sort restaurants={this.state.restaurants} sortResults={this.sortResults} />
+                        <div className="search-container">
+                            <SearchBar handleChange={this.handleChange} handleClick={this.handleClick} />
                         </div>
-                            <Restaurants restaurants={this.state.restaurants} location={this.state.location} cuisine={this.state.cuisine} addToCrawl={this.addToCrawl} />
+                        <div className="content">
+                            <div className="main">
+                                <div id="show-results">
+                                    <h3>Showing results for <strong>{this.state.searchTitle[0]}</strong> near <strong>{this.state.searchTitle[1]}</strong></h3>
+                                    <div>
+                                        <Sort restaurants={this.state.restaurants} sortResults={this.sortResults} />
+                                    </div>
+                                </div>
+                                <div>
+                                    <Restaurants restaurants={this.state.restaurants} location={this.state.location} cuisine={this.state.cuisine} addToCrawl={this.addToCrawl} />
+                                </div>
+                            </div>
+                            <div className="sidebar">
+                                <div>
+                                    {this.getCrawl()}
+                                </div>
+                                    <CrawlList crawl={this.state.crawl} swap={this.swap} deleteCrawlItem={this.deleteCrawlItem} />
+                                <div className="fav-form-container">
+                                    {this.showFavoriteButton()}
+                                </div>
+                                <div className="fav-list-container">
+                                    <h5 className="top-line">You currently have {this.state.favorites.length} favorites.</h5>
+                                    {this.state.favorites.map((fav) => (
+                                        <FavoritesList fav={fav} />
+                                    ))}
+                                </div>
+                            </div>
                         </div>
-                        <div className="sidebar">
-                            <div>
-                                {this.getCrawl()}
-                            </div>
-                            <CrawlList crawl={this.state.crawl} swap={this.swap} deleteCrawlItem={this.deleteCrawlItem} />
-                            <div className="fav-form-container">
-                                {this.showFavoriteButton()}
-                            </div>
-                            <div className="fav-list-container">
-                                <h5 className="top-line">You currently have {this.state.favorites.length} favorites.</h5>
-                                {this.state.favorites.map((fav) => (
-                                    <FavoritesList fav={fav} />
-                                ))}
-                            </div>
-                        </div>
-                    </div>
                     </div>
                 </main>
                 <footer>
@@ -314,3 +318,13 @@ class App extends Component {
 }
 
 export default App;
+
+// location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
+// cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
+// radius: localStorage.getItem("radius") ? JSON.parse(localStorage.getItem("radius")) : 0,
+// restaurants: localStorage.getItem("restaurants") ? JSON.parse(localStorage.getItem("restaurants")) : [],
+// crawl: [],
+// favorites: [],
+// filter: '',
+// searchTitle: [],
+// listName: ''
