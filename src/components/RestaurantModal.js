@@ -1,6 +1,7 @@
 import React from 'react';
 import { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import StarRatings from 'react-star-ratings';
+import convertToDollars from '../util';
 
 const RestaurantModal = ({ show, onHide, restaurant, handleClose, addToCrawl}) => {
     // console.log(addToCrawl);
@@ -53,7 +54,7 @@ const RestaurantModal = ({ show, onHide, restaurant, handleClose, addToCrawl}) =
                                 </div>
                                 <div className="modal-info">
                                     <h6>Price: </h6>
-                                        <span>{restaurant.price}</span>
+                                        <span>{convertToDollars(restaurant.price)}</span>
                                 </div>
                                 <div className="modal-info">
                                     <h6>Phone: </h6>

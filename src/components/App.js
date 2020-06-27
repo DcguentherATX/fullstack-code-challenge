@@ -37,6 +37,7 @@ class App extends Component {
         this.swap = this.swap.bind(this);
         this.deleteCrawlItem = this.deleteCrawlItem.bind(this);
         this.clearTour = this.clearTour.bind(this);
+        this.showRestaurants = this.showRestaurants.bind(this);
     }
 
     handleChange(e) {
@@ -140,6 +141,32 @@ class App extends Component {
             crawl: crawl
         })
         this.getCrawl();
+    }
+
+    // determines whether welcome message or restaurant list is displayed
+
+    showRestaurants() {
+        if (this.state.restaurants.length > 0) {
+            return (
+                <Restaurants restaurants={this.state.restaurants} location={this.state.location} cuisine={this.state.cuisine} addToCrawl={this.addToCrawl} />
+            )
+        } else {
+            return (
+                <div className="welcome">
+                    <p>
+                        Welcome to the Pearl Food Tour Experience where you can create your own food tour.
+                        Simply add a type of cuisine, location, and search radius in the form above, and
+                        a list of top matches will be displayed.  If and restaurants pique your interest,
+                        add then to your food tour list.
+                    </p>
+                    <p>
+                        The food tour list that you create will be visible on the right.  Feel free to swap
+                        the order according to your preferences.  Finally, if you would like to save your
+                        current food tour, simply click the "Add to Favorites" button.  Bon Apetit!
+                    </p>
+                </div>
+            )
+        }
     }
 
     // updates the number of locations in the crawl
@@ -301,8 +328,8 @@ class App extends Component {
                                         <Sort restaurants={this.state.restaurants} sortResults={this.sortResults} />
                                     </div>
                                 </div>
-                                <div>
-                                    <Restaurants restaurants={this.state.restaurants} location={this.state.location} cuisine={this.state.cuisine} addToCrawl={this.addToCrawl} />
+                                <div className="restaurant-container">
+                                    {this.showRestaurants()}
                                 </div>
                             </div>
                             <div className="sidebar">

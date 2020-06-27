@@ -155,6 +155,22 @@ label {
     border-left: .1rem var(--primary-color) solid;
 }
 
+/* Welcome */
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    padding-top: 4em;
+}
+
+.welcome p {
+    max-width: 35rem;
+}
+
 /* Card Deck Container */
 
 .results {
