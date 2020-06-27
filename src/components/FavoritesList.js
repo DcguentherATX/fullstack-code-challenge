@@ -26,6 +26,7 @@ const FavoritesList = (props) => {
                 <div>Location: {location}</div> 
                 <div>Stops: {stops}</div>
             </div>
+            <button value={props.index} onClick={props.deleteTour}>Remove</button>
         </div>
         </Fade>
     )

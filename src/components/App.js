@@ -22,7 +22,7 @@ class App extends Component {
             radius: localStorage.getItem("radius") ? JSON.parse(localStorage.getItem("radius")) : 0,
             restaurants: [],
             crawl: [],
-            favorites: [],
+            favorites: localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : [],
             filter: '',
             searchTitle: [],
             listName: '',
@@ -42,6 +42,7 @@ class App extends Component {
         this.clearTour = this.clearTour.bind(this);
         this.showRestaurants = this.showRestaurants.bind(this);
         this.filterProducts = this.filterProducts.bind(this);
+        this.deleteTour = this.deleteTour.bind(this);
     }
 
     handleChange(e) {
@@ -213,9 +214,8 @@ class App extends Component {
             return (
                 <Fade bottom cascade>
                     <div className="fav-form">
-
                         <form >
-                            <label htmlFor="listName">Enter List Name:</label>
+                            <label htmlFor="listName">Enter Tour Name:</label>
                             <input type="text" id="listName" name="listName" onChange={(e) => this.handleChange(e)} placeholder="enter name" required={"required"}></input>
                         </form>
                         <div className="fav-btn">
@@ -236,7 +236,13 @@ class App extends Component {
         e.preventDefault();
 
         if (!this.state.listName || this.state.tourNames.includes(this.state.listName)) {
-            alert('please enter a unique list name');
+            swal({
+                title: "Uh Oh!",
+                text: "Please enter a unique name for this tour!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
         } else {
         // console.log(this.state.listName, this.state.crawl);
         let tour = this.state.crawl.slice();
@@ -256,6 +262,9 @@ class App extends Component {
             favorites: favorites,
             tourNames: tourNames
         })
+        localStorage.removeItem('favorites');
+        localStorage.setItem("favorites", JSON.stringify(this.state.favorites));
+
     }
 }
 
@@ -349,6 +358,19 @@ class App extends Component {
         })
     }
 
+    deleteTour(e) {
+        console.log(e.target.value);
+        const index = Number(e.target.value);
+        const favorites = this.state.favorites.slice(0, index).concat(this.state.favorites.slice(index + 1));
+
+        this.setState({
+            favorites: favorites
+        })
+        localStorage.removeItem("favorites");
+        console.log('here', this.state.favorites);
+        localStorage.setItem("favorites", JSON.stringify(this.state.favorites));
+    }
+
     render () {
         return (
             <div className="grid-container">
@@ -385,7 +407,7 @@ class App extends Component {
                                 <div className="fav-list-container">
                                     <h5 className="top-line">You currently have {this.state.favorites.length} favorites.</h5>
                                     {this.state.favorites.map((fav, index) => (
-                                        <FavoritesList fav={fav} key={index} />
+                                        <FavoritesList fav={fav} key={index} index={index} deleteTour={this.deleteTour}/>
                                     ))}
                                 </div>
                             </div>
