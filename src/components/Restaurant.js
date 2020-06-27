@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import StarRatings from 'react-star-ratings';
 import convertToDollars from '../util';
+import RestaurantModal from './RestaurantModal';
 
 const Restaurant = (props) => {
     // console.log(props);
+
+    // I chose to use hooks here to show that I am familiar with them.
+    
+    const [showModal, setShowModal] = useState(false);
+
+    const handleShowModal = () => {
+        setShowModal(true);
+    }
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    }
+
+
+
     return (
         <div className="card-container">
             <Card style={{ width: '22rem' }}>
@@ -31,9 +47,17 @@ const Restaurant = (props) => {
                         Price: {convertToDollars(props.restaurant.price)}
                     </span>
                     <div className="card-buttons">
-                        <Button variant="outline-light">
+                        <Button variant="outline-light" onClick={handleShowModal}>
                             More Info
                         </Button>
+                        <RestaurantModal 
+                            className="restaurant-modal"
+                            show={showModal}
+                            onHide={handleCloseModal}
+                            handleClose={handleCloseModal}
+                            restaurant={props.restaurant}
+                            addToCrawl={props.addToCrawl}
+                            />
                         <Button variant="outline-light" value={props.restaurant.id} onClick={(e) => props.addToCrawl(e)}>
                             Add to Crawl
                         </Button>

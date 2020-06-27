@@ -4,15 +4,20 @@ const Sort = (props) => {
     return (
         <div className="sort-container">
             <div className="distance-sort">
-                Distance:  
+                Sort By:  
                 {" "}
                 <select onChange={(e) => props.sortResults(e)}>
                     <option value="default">Default</option>
                     <option value="closest">Closest</option>
                     <option value="furthest">Furthest</option>
+                    <option value="lowest">Lowest Rated</option>
+                    <option value="highest">Highest Rated</option>
+                    <option value="cheapest">Cheapest</option>
+                    <option value="expensive">Most Expensive</option>
+                    <option value="alphabetical">Alphabetical</option>
                 </select>
             </div>
-            <div className="rating-sort">
+            {/* <div className="rating-sort">
                 Rating:
                 {" "}
                 <select onChange={(e) => props.sortResults(e)}>
@@ -37,7 +42,7 @@ const Sort = (props) => {
                     <option value="default">Default</option>
                     <option value="alphabetical">Alphabetical</option>
                 </select>
-            </div>
+            </div> */}
         </div>
     )
 }

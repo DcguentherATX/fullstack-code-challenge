@@ -97,6 +97,11 @@ h3, h5 {
     text-align: center;
 }
 
+h6 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
 /* SearchBar */
 
 .search-container {
@@ -268,6 +273,7 @@ label {
     display: flex;
     justify-content: center;
     margin: 2rem 0;
+
 }
 
 .fav-form {
@@ -311,4 +317,31 @@ label {
 .fav-list-details {
     display: flex;
     flex-direction: column;
+}
+
+/*  Modal  */
+
+.modal-img {
+    max-width: 100%;
+    height: auto;
+}
+
+.rest-details,
+.addy {
+    display: flex;
+    flex-direction: column;
+}
+
+.rest-details h6 {
+    width: 7rem;
+}
+
+.modal-info span {
+    margin-left: 2rem;
+    font-size: 1rem;
+}
+
+.modal-info {
+    display: flex;
+    padding-bottom: .2rem;
 }

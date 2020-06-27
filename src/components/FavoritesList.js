@@ -2,7 +2,7 @@ import React from 'react';
 import Fade from 'react-reveal/Fade';
 
 const FavoritesList = (props) => {
-    console.log(props.fav[0]);
+    // console.log(props.fav[0]);
     let listName = '';
     let imageUrl = '';
     let location = '';
@@ -14,8 +14,6 @@ const FavoritesList = (props) => {
         location = `${props.fav[0].location.city}, ${props.fav[0].location.state}`;
         stops = props.fav.length - 1;
     };
-    console.log('david', listName);
-
 
     return (
         <Fade top cascade>

@@ -3,7 +3,7 @@ import Restaurant from './Restaurant';
 import CardDeck from 'react-bootstrap/CardDeck';
 
 const Restaurants = (props) => {
-    console.log('props', props);
+    // console.log('props', props);
 
     return (
             <div className='card-deck-container'>

@@ -36,6 +36,7 @@ class App extends Component {
         this.sortResults = this.sortResults.bind(this);
         this.swap = this.swap.bind(this);
         this.deleteCrawlItem = this.deleteCrawlItem.bind(this);
+        this.clearTour = this.clearTour.bind(this);
     }
 
     handleChange(e) {
@@ -96,6 +97,7 @@ class App extends Component {
 
     addToCrawl(e) {
         const id = e.target.value;
+        console.log('id', id);
         let crawl = this.state.crawl.slice();
         let inCrawl = false;
 
@@ -145,17 +147,25 @@ class App extends Component {
     getCrawl() {
         if (this.state.crawl.length === 0) {
             return (
-                <h5>There are currently no locations in your food crawl.</h5>
+                <h5>There are currently no locations in your food tour.</h5>
             )
         } else if (this.state.crawl.length === 1) {
             return (
-                <h5>You currently have 1 location in your food crawl.</h5>
+                <h5>You currently have 1 location in your food tour.</h5>
             )
         } else {
             return (
-                <h5>You currently have {this.state.crawl.length} locations in your food crawl.</h5>
+                <h5>You currently have {this.state.crawl.length} locations in your food tour.</h5>
             )
         }
+    }
+
+    // clears entire current tour list
+
+    clearTour() {
+        this.setState({
+            crawl: []
+        })
     }
 
     // shows add to favorites button
@@ -165,13 +175,17 @@ class App extends Component {
             return (
                 <Fade bottom cascade>
                     <div className="fav-form">
-                    <form >
-                        <label htmlFor="listName">Enter List Name:</label>
-                        <input type="text" id="listName" name="listName" onChange={(e) => this.handleChange(e)} placeholder="enter name" required={"required"}></input>
-                    </form>
-                    <div className="fav-btn">
-                    <Button variant="primary" onClick={(e) => this.addToFavorites(e)}>Add This Crawl to Favorites</Button>
-                    </div>
+
+                        <form >
+                            <label htmlFor="listName">Enter List Name:</label>
+                            <input type="text" id="listName" name="listName" onChange={(e) => this.handleChange(e)} placeholder="enter name" required={"required"}></input>
+                        </form>
+                        <div className="fav-btn">
+                            <Button variant="primary" onClick={(e) => this.addToFavorites(e)}>Add This Tour to Favorites</Button>
+                        </div>
+                        <div className="fav-btn">
+                            <Button variant="primary" onClick={() => this.clearTour()}>Clear Current Food Tour</Button>
+                        </div>
                     </div>
                 </Fade>
                 )
@@ -200,7 +214,7 @@ class App extends Component {
         favorites.push(tour);
 
         this.setState({
-            favorites: favorites
+            favorites: favorites,
         })
     }
 }
@@ -271,7 +285,7 @@ class App extends Component {
             <div className="grid-container">
                 <header>
                     <h1>
-                        The Pearl Food Crawl Experience
+                        The Pearl Food Tour Experience
                     </h1>
                 </header>
                 <main>
@@ -301,8 +315,8 @@ class App extends Component {
                                 </div>
                                 <div className="fav-list-container">
                                     <h5 className="top-line">You currently have {this.state.favorites.length} favorites.</h5>
-                                    {this.state.favorites.map((fav) => (
-                                        <FavoritesList fav={fav} />
+                                    {this.state.favorites.map((fav, index) => (
+                                        <FavoritesList fav={fav} key={index} />
                                     ))}
                                 </div>
                             </div>
