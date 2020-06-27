@@ -310,6 +310,16 @@ label {
     border-top: .1rem var(--primary-color) solid;
 }
 
+.restaurant-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-match {
+    padding-top: 5em;
+}
+
 /* Filter */
 
 .sort-container {

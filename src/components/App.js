@@ -26,8 +26,9 @@ class App extends Component {
             filter: '',
             searchTitle: [],
             listName: '',
-            searchResults: []
+            searchResults: [],
         }
+
         this.handleChange = this.handleChange.bind(this);
         this.handleClick = this.handleClick.bind(this);
         this.addToCrawl = this.addToCrawl.bind(this);
@@ -153,7 +154,7 @@ class App extends Component {
             return (
                 <Restaurants restaurants={this.state.restaurants} location={this.state.location} cuisine={this.state.cuisine} addToCrawl={this.addToCrawl} />
             )
-        } else {
+        } else if (this.state.restaurants.length === 0 && !this.state.filter) {
             return (
                 <div className="welcome">
                     <p>
@@ -167,6 +168,12 @@ class App extends Component {
                         the order according to your preferences.  Finally, if you would like to save your
                         current food tour, simply click the "Add to Favorites" button.  Bon Apetit!
                     </p>
+                </div>
+            )
+        } else {
+            return (
+                <div className="no-match">
+                    No results match current filters.
                 </div>
             )
         }
@@ -278,6 +285,7 @@ class App extends Component {
 
         if (score === "all") {
             this.setState({
+                filter: filter,
                 restaurants: this.state.searchResults
             })
         } else {
@@ -289,6 +297,7 @@ class App extends Component {
                 }
             })
             this.setState({
+                filter: filter,
                 restaurants: filtered
             })
         } 
