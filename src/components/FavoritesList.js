@@ -1,5 +1,10 @@
 import React from 'react';
 import Fade from 'react-reveal/Fade';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+
+import remove from '../../images/remove-button.png';
+
 
 const FavoritesList = (props) => {
     // console.log(props.fav[0]);
@@ -18,6 +23,7 @@ const FavoritesList = (props) => {
     return (
         <Fade top cascade>
         <div className="tour-list">
+            <div className="tour-info">
             <div>
                 <img className="crawl-image" src={imageUrl} />
             </div>
@@ -26,7 +32,19 @@ const FavoritesList = (props) => {
                 <div>Location: {location}</div> 
                 <div>Stops: {stops}</div>
             </div>
-            <button value={props.index} onClick={props.deleteTour}>Remove</button>
+            </div>
+            <div className="fav-btn-list">
+            <OverlayTrigger 
+                        key={'remove'}
+                        placement={'left'}
+                        overlay={
+                            <Tooltip id={'tooltip-left'} >
+                                Remove Item
+                            </Tooltip>
+                        }>
+                        <img onClick={(e) => props.deleteTour(e)} value={props.index} src={remove} alt="remove-button" />
+            </OverlayTrigger>
+            </div>
         </div>
         </Fade>
     )

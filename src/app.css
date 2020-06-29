@@ -276,12 +276,14 @@ label {
     width: 100%;
 }
 
-.crawl-button-list img {
+.crawl-button-list img,
+.fav-btn-list img {
     height: 1.5rem;
     width: 1.5rem;
 }
 
-.crawl-button-list img:hover {
+.crawl-button-list img:hover,
+.fav-btn-list img:hover {
     cursor: pointer;
 }
 
@@ -332,6 +334,12 @@ label {
 
 .tour-list {
     display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+}
+
+.tour-info {
+    display: flex;
     flex-direction: column;
     padding: 1.5rem;
 }
@@ -343,6 +351,13 @@ label {
 .fav-list-details {
     display: flex;
     flex-direction: column;
+}
+
+.fav-btn-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 2rem;
 }
 
 /*  Modal  */
@@ -370,4 +385,16 @@ label {
 .modal-info {
     display: flex;
     padding-bottom: .2rem;
+}
+
+/* swal */
+
+.swal-button {
+    background-color: var(--primary-color);
+}
+
+.swal-button:hover{
+    background-color: #ffffff;
+    color: var(--primary-color);
+    border: .1rem var(--primary-color) solid;
 }

@@ -9,8 +9,7 @@ import FavoritesList from './FavoritesList';
 import CrawlList from './CrawlList';
 import Fade from 'react-reveal/Fade';
 import swal from '@sweetalert/with-react';
-
-import remove from '../../images/remove-button.png';
+import { saveAs } from 'file-saver';
 
 class App extends Component {
     constructor(props) {
@@ -19,9 +18,9 @@ class App extends Component {
         this.state = {
             location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
             cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
-            radius: localStorage.getItem("radius") ? JSON.parse(localStorage.getItem("radius")) : 0,
+            radius: 0,
             restaurants: [],
-            crawl: [],
+            crawl: localStorage.getItem("crawl") ? JSON.parse(localStorage.getItem("crawl")) : [],
             favorites: localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : [],
             filter: '',
             searchTitle: [],
@@ -43,6 +42,9 @@ class App extends Component {
         this.showRestaurants = this.showRestaurants.bind(this);
         this.filterProducts = this.filterProducts.bind(this);
         this.deleteTour = this.deleteTour.bind(this);
+        this.handleSaveAsPDF = this.handleSaveAsPDF.bind(this);
+        this.handleDownloadClick = this.handleDownloadClick.bind(this);
+        this.handleSaveAsJSON = this.handleSaveAsJSON.bind(this);
     }
 
     handleChange(e) {
@@ -57,6 +59,14 @@ class App extends Component {
         })
         localStorage.setItem(e.target.name.toString(), JSON.stringify(e.target.value));
 
+    }
+
+    componentDidUpdate() {
+        localStorage.removeItem('favorites');
+        localStorage.setItem("favorites", JSON.stringify(this.state.favorites));
+
+        localStorage.removeItem('crawl');
+        localStorage.setItem("crawl", JSON.stringify(this.state.crawl));
     }
 
     // handles yelp search
@@ -222,6 +232,9 @@ class App extends Component {
                             <Button variant="primary" onClick={(e) => this.addToFavorites(e)}>Add This Tour to Favorites</Button>
                         </div>
                         <div className="fav-btn">
+                            <Button variant="primary" onClick={this.handleDownloadClick}>Download Current Tour</Button>
+                        </div>
+                        <div className="fav-btn">
                             <Button variant="primary" onClick={() => this.clearTour()}>Clear Current Food Tour</Button>
                         </div>
                     </div>
@@ -249,11 +262,7 @@ class App extends Component {
         let name = this.state.listName;
         const tourNames = this.state.tourNames.slice();
         tourNames.push(name);
-        // let fav = [{
-        //     name: name,
-        //     tour: tour
-        // }]
-        // console.log(fav);
+
         const favorites = this.state.favorites.slice();
         tour.push(name);
         favorites.push(tour);
@@ -262,9 +271,6 @@ class App extends Component {
             favorites: favorites,
             tourNames: tourNames
         })
-        localStorage.removeItem('favorites');
-        localStorage.setItem("favorites", JSON.stringify(this.state.favorites));
-
     }
 }
 
@@ -293,7 +299,7 @@ class App extends Component {
         let type = filter[0];
         let score = filter[1];
         let restaurants = this.state.restaurants.slice();
-        console.log(type, score);
+        // console.log(type, score);
 
         if (score === "all") {
             this.setState({
@@ -349,7 +355,7 @@ class App extends Component {
     }
 
     deleteCrawlItem(e){
-        console.log(e.target.getAttribute('value'));
+        // console.log(e.target.getAttribute('value'));
         const index = Number(e.target.parentNode.getAttribute('index'));
         const crawl = this.state.crawl.slice(0, index).concat(this.state.crawl.slice(index + 1));
         
@@ -359,16 +365,79 @@ class App extends Component {
     }
 
     deleteTour(e) {
-        console.log(e.target.value);
-        const index = Number(e.target.value);
+        // console.log(e.target.getAttribute('value'));
+        const index = Number(e.target.getAttribute('value'));
         const favorites = this.state.favorites.slice(0, index).concat(this.state.favorites.slice(index + 1));
+        // console.log('newfav', favorites);
 
         this.setState({
             favorites: favorites
-        })
+        });
         localStorage.removeItem("favorites");
         console.log('here', this.state.favorites);
-        localStorage.setItem("favorites", JSON.stringify(this.state.favorites));
+        localStorage.setItem("favorites", JSON.stringify(favorites));
+    }
+
+    handleDownloadClick() {
+        swal({
+            title: "Hello",
+            text: "Which file format do you prefer?",
+            icon: "warning",
+            buttons: {
+                Cancel: true,
+                json: true,
+                csv: true,
+                pdf: true
+            },
+        })
+        .then((res) => {
+            if (res === 'pdf') {
+                this.handleSaveAsPDF();
+            }
+            if (res === 'csv') {
+                this.handleSaveAsCSV();
+            }
+            if (res === 'json') {
+                this.handleSaveAsJSON();
+            }
+        })
+    }
+
+    handleSaveAsJSON() {
+        console.log('saving as json');
+        Axios.post('/create-json', { crawl: this.state.crawl} )
+        .then(() => Axios.get('/get-json', {responseType: 'blob'}))
+        .then((res) => {
+            const jsonBlob = new Blob([res.data], {type: 'application/text/csv'});
+
+            saveAs(jsonBlob, 'tour.json');
+        })
+    }
+
+    handleSaveAsCSV() {
+        console.log('saving as csv')
+        Axios.post('/create-csv', { crawl: this.state.crawl })
+        .then(() => Axios.get('/get-csv', {responseType: 'blob'}))
+        .then((res) => {
+            console.log(res);
+            const csvBlob = new Blob([res.data], { type: 'application/text/csv'});
+            
+            saveAs(csvBlob, 'tour.csv');
+        })
+    }
+
+    handleSaveAsPDF() {
+        console.log('saving as PDF');
+        Axios.post('/create-pdf', { crawl: this.state.crawl})
+            .then(() => Axios.get('/get-pdf', {responseType: 'blob'}))
+            .then((res) => {
+                const pdfBlob = new Blob([res.data], { type: 'application/pdf' });
+
+            saveAs(pdfBlob, 'tour.pdf');
+        })
+        .catch((err) => {
+            console.log(err);
+        })
     }
 
     render () {
