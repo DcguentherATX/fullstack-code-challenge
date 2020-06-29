@@ -47,7 +47,7 @@ app.post('/create-json', (req, res) => {
         if (err) {
             res.send(Promise.reject());
         } else {
-            console.log('successful json created')
+            // console.log('successful json created')
             res.send(Promise.resolve());
         }
     })
@@ -105,7 +105,7 @@ app.post('/create-csv', (req, res) => {
 })
 
 app.get('/get-csv', (req, res) => {
-    console.log('retrieving csv');
+    // console.log('retrieving csv');
     res.sendFile(`${__dirname}/tour.csv`);
 })
 

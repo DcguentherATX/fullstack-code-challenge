@@ -16,11 +16,11 @@ class App extends Component {
         super(props);
 
         this.state = {
-            location: localStorage.getItem("location") ? JSON.parse(localStorage.getItem("location")) : '',
-            cuisine: localStorage.getItem("cuisine") ? JSON.parse(localStorage.getItem("cuisine")) : '',
+            location: '',
+            cuisine: '',
             radius: 0,
             restaurants: [],
-            crawl: localStorage.getItem("crawl") ? JSON.parse(localStorage.getItem("crawl")) : [],
+            crawl: [],
             favorites: localStorage.getItem("favorites") ? JSON.parse(localStorage.getItem("favorites")) : [],
             filter: '',
             searchTitle: [],
@@ -64,9 +64,6 @@ class App extends Component {
     componentDidUpdate() {
         localStorage.removeItem('favorites');
         localStorage.setItem("favorites", JSON.stringify(this.state.favorites));
-
-        localStorage.removeItem('crawl');
-        localStorage.setItem("crawl", JSON.stringify(this.state.crawl));
     }
 
     // handles yelp search
@@ -279,7 +276,7 @@ class App extends Component {
     
         this.setState((state) => ({
           filter: sort,
-          restaurants: this.state.restaurants.slice().sort((a, b) => (
+          restaurants: this.state.searchResults.slice().sort((a, b) => (
             sort === "lowest" ? ((a.rating > b.rating) ? 1 : -1) :
             sort === "highest" ? ((a.rating < b.rating) ? 1 : -1) :
             sort === "closest" ? ((a.distance > b.distance) ? 1 : -1) :
@@ -298,7 +295,7 @@ class App extends Component {
         let filter = e.target.value.split('-');
         let type = filter[0];
         let score = filter[1];
-        let restaurants = this.state.restaurants.slice();
+        let restaurants = this.state.searchResults.slice();
         // console.log(type, score);
 
         if (score === "all") {
@@ -367,6 +364,7 @@ class App extends Component {
     deleteTour(e) {
         // console.log(e.target.getAttribute('value'));
         const index = Number(e.target.getAttribute('value'));
+        console.log(this.state.tourNames, e.target.getAttribute('value'));
         const favorites = this.state.favorites.slice(0, index).concat(this.state.favorites.slice(index + 1));
         // console.log('newfav', favorites);
 

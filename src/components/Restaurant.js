@@ -59,7 +59,7 @@ const Restaurant = (props) => {
                             addToCrawl={props.addToCrawl}
                             />
                         <Button variant="outline-light" value={props.restaurant.id} onClick={(e) => props.addToCrawl(e)}>
-                            Add to Crawl
+                            Add to Tour
                         </Button>
                     </div>
                 </Card.Body>
