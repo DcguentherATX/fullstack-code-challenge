@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Sort = (props) => {
+const Sort = ({ sortResults, filterProducts }) => {
     return (
         <div className="sort-container">
             <div className="distance-sort">
                 Sort By:  
                 {" "}
-                <select onChange={(e) => props.sortResults(e)}>
+                <select onChange={(e) => sortResults(e)}>
                     <option value="default">Default</option>
                     <option value="closest">Closest</option>
                     <option value="furthest">Furthest</option>
@@ -20,7 +20,7 @@ const Sort = (props) => {
             <div className="filter-rating">
                 Filter Rating:
                 {" "}
-                <select value="rating" onChange={props.filterProducts}>
+                <select value="rating" onChange={filterProducts}>
                     <option value=""></option>
                     <option value="rating-1">1 Star</option>
                     <option value="rating-2">2 Stars</option>
@@ -33,7 +33,7 @@ const Sort = (props) => {
             <div className="filter-price">
                 Filter Price:
                 {" "}
-                <select value="rating" onChange={props.filterProducts}>
+                <select value="rating" onChange={filterProducts}>
                     <option value=""></option>
                     <option value="price-1">1 Dollar Sign</option>
                     <option value="price-2">2 Dollar Signs</option>

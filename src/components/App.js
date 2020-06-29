@@ -25,8 +25,7 @@ class App extends Component {
             filter: '',
             searchTitle: [],
             listName: '',
-            searchResults: localStorage.getItem("searchResults") ? JSON.parse(localStorage.getItem("searchResults")) : [],
-            tourNames: []
+            searchResults: [],
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -47,6 +46,13 @@ class App extends Component {
         this.handleSaveAsJSON = this.handleSaveAsJSON.bind(this);
     }
 
+    // allows favorites to persist for user on application refresh
+
+    componentDidUpdate() {
+        localStorage.removeItem('favorites');
+        localStorage.setItem("favorites", JSON.stringify(this.state.favorites));
+    }
+
     handleChange(e) {
         if (e.target.name === 'radius') {
             if (Number(e.target.value) > 40000) {
@@ -57,103 +63,58 @@ class App extends Component {
         this.setState({
             [e.target.name]: e.target.value
         })
-        localStorage.setItem(e.target.name.toString(), JSON.stringify(e.target.value));
+        // localStorage.setItem(e.target.name.toString(), JSON.stringify(e.target.value));
 
-    }
-
-    componentDidUpdate() {
-        localStorage.removeItem('favorites');
-        localStorage.setItem("favorites", JSON.stringify(this.state.favorites));
     }
 
     // handles yelp search
 
     handleClick(e) {
         e.preventDefault();
-
-        Axios.get('/api', {
-            params: {
+        
+        if (!this.state.location || !this.state.cuisine) {
+            swal({
+                title: "Oh no!",
+                text: "Please enter a cuisine and location!",
+                icon: "warning",
+                buttons: ["Cancel", "Will Do!"],
+            })
+        } else {
+            Axios.get('/api', {
+                params: {
                 location: this.state.location,
                 radius: this.state.radius,
                 cuisine: this.state.cuisine,
             }
-        })
-        .then((response) => {
-            response.data.businesses.forEach((business, i) => {
-                business.resultIndex = i;
-                if (!business.price) {
-                    business.price = 0;
-                } else {
-                    business.price = business.price.length;
-                }
-                if (!business.rating) {
-                    business.rating = 0;
-                }
-            })
-
-            this.setState({
-                restaurants: response.data.businesses,
-                searchResults: response.data.businesses,
-                searchTitle: [this.state.cuisine, this.state.location]
-            })
-            if (this.state.searchTitle.length > 0) {
-                document.getElementById('show-results').style.display = 'block';
-            }
-            localStorage.setItem("restaurants", JSON.stringify(response.data.businesses));
-            localStorage.setItem("searchResults", JSON.stringify(response.data.businesses))
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-    }
-
-    // adds target restaurant to crawl list
-
-    addToCrawl(e) {
-        const id = e.target.value;
-        // console.log('id', id);
-        let crawl = this.state.crawl.slice();
-        let inCrawl = false;
-
-        this.state.crawl.forEach((item) => {
-            if (item.id === id) {
-                inCrawl = true;
-            }
-        })
-
-        if (!inCrawl) {
-            this.state.restaurants.forEach((restaurant) => {
-                if (restaurant.id === id) {
-                    crawl.push(restaurant);
-                }
-            });
-        } else {
-            swal({
-                title: "Are you sure?",
-                text: "This restaurant is already included in your current food crawl!",
-                icon: "warning",
-                buttons: ["Cancel", "Continue"],
-                dangerMode: true,
             })
             .then((response) => {
-                if (response) {
-                    this.state.restaurants.forEach((restaurant) => {
-                        if (restaurant.id === id) {
-                            crawl.push(restaurant);
-                        }
-                    })
-                }
+                response.data.businesses.forEach((business, i) => {
+                    business.resultIndex = i;
+                    if (!business.price) {
+                        business.price = 0;
+                    } else {
+                        business.price = business.price.length;
+                    }
+                    if (!business.rating) {
+                        business.rating = 0;
+                    }
+                })
 
                 this.setState({
-                    crawl: crawl
+                    restaurants: response.data.businesses,
+                    searchResults: response.data.businesses,
+                    searchTitle: [this.state.cuisine, this.state.location]
                 })
-            });
-        };
-
-        this.setState({
-            crawl: crawl
-        })
-        this.getCrawl();
+                if (this.state.searchTitle.length > 0) {
+                    document.getElementById('show-results').style.display = 'block';
+                }
+                // localStorage.setItem("restaurants", JSON.stringify(response.data.businesses));
+                localStorage.setItem("searchResults", JSON.stringify(response.data.businesses))
+            })
+            .catch((err) => {
+                console.log(err);
+            })
+        }
     }
 
     // determines whether welcome message or restaurant list is displayed
@@ -188,32 +149,6 @@ class App extends Component {
         }
     }
 
-    // updates the number of locations in the crawl
-
-    getCrawl() {
-        if (this.state.crawl.length === 0) {
-            return (
-                <h5>There are currently no locations in your food tour.</h5>
-            )
-        } else if (this.state.crawl.length === 1) {
-            return (
-                <h5>You currently have 1 location in your food tour.</h5>
-            )
-        } else {
-            return (
-                <h5>You currently have {this.state.crawl.length} locations in your food tour.</h5>
-            )
-        }
-    }
-
-    // clears entire current tour list
-
-    clearTour() {
-        this.setState({
-            crawl: []
-        })
-    }
-
     // shows add to favorites button
 
     showFavoriteButton() {
@@ -240,36 +175,111 @@ class App extends Component {
         }
     }
 
-    // add to favorites
+    // adds target restaurant to crawl list
+
+    addToCrawl(e) {
+        const id = e.target.value;
+        // console.log('id', id);
+        let crawl = this.state.crawl.slice();
+        let inCrawl = false;
+
+        this.state.crawl.forEach((item) => {
+            if (item.id === id) {
+                inCrawl = true;
+            }
+        })
+
+        if (!inCrawl) {
+            this.state.restaurants.forEach((restaurant) => {
+                if (restaurant.id === id) {
+                    crawl.push(restaurant);
+                }
+            });
+        } else {
+            swal({
+                title: "Are you sure?",
+                text: "This restaurant is already included in your current food crawl!",
+                icon: "warning",
+                buttons: ["Cancel", "Continue"],
+            })
+            .then((response) => {
+                if (response) {
+                    this.state.restaurants.forEach((restaurant) => {
+                        if (restaurant.id === id) {
+                            crawl.push(restaurant);
+                        }
+                    })
+                }
+
+                this.setState({
+                    crawl: crawl
+                })
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+        };
+
+        this.setState({
+            crawl: crawl
+        })
+        this.getCrawl();
+    }
+
+    // updates the number of locations in the crawl
+
+    getCrawl() {
+        if (this.state.crawl.length === 0) {
+            return (
+                <h5>There are currently no locations in your food tour.</h5>
+            )
+        } else if (this.state.crawl.length === 1) {
+            return (
+                <h5>You currently have 1 location in your food tour.</h5>
+            )
+        } else {
+            return (
+                <h5>You currently have {this.state.crawl.length} locations in your food tour.</h5>
+            )
+        }
+    }
+
+    // clears entire current tour list
+
+    clearTour() {
+        this.setState({
+            crawl: []
+        })
+    }
+
+    // adds current tour list to favorites list
 
     addToFavorites(e) {
         e.preventDefault();
 
-        if (!this.state.listName || this.state.tourNames.includes(this.state.listName)) {
+        if (!this.state.listName) {
             swal({
                 title: "Uh Oh!",
                 text: "Please enter a unique name for this tour!",
                 icon: "warning",
                 buttons: true,
-                dangerMode: true,
             })
         } else {
         // console.log(this.state.listName, this.state.crawl);
-        let tour = this.state.crawl.slice();
-        let name = this.state.listName;
-        const tourNames = this.state.tourNames.slice();
-        tourNames.push(name);
+            let tour = this.state.crawl.slice();
+            let name = this.state.listName;
 
-        const favorites = this.state.favorites.slice();
-        tour.push(name);
-        favorites.push(tour);
+            const favorites = this.state.favorites.slice();
+            tour.push(name);
+            favorites.push(tour);
 
-        this.setState({
-            favorites: favorites,
-            tourNames: tourNames
-        })
+            this.setState({
+                favorites: favorites,
+            })
+        }
     }
-}
+    
+    // sorts yelp results by rating, price, distance, or alphabetically, also allows all search results to be viewed again
 
     sortResults(e) {
         const sort = event.target.value;
@@ -289,7 +299,7 @@ class App extends Component {
         }));
     }
 
-    // filtering function
+    // filters yelp results by price and rating in a 1 point range (ex. 2 - 3, 3 - 4);
 
     filterProducts(e) {
         let filter = e.target.value.split('-');
@@ -318,7 +328,7 @@ class App extends Component {
         } 
     }
 
-    // reordering function for items in crawl list
+    // reordering function for items in tour list
 
     swap(e) {
         const dir = e.target.getAttribute('value');
@@ -351,6 +361,8 @@ class App extends Component {
         })
     }
 
+    // deletes a single item from the tour list
+
     deleteCrawlItem(e){
         // console.log(e.target.getAttribute('value'));
         const index = Number(e.target.parentNode.getAttribute('index'));
@@ -361,10 +373,11 @@ class App extends Component {
         })
     }
 
+    // deletes an entire tour from favorites
+
     deleteTour(e) {
         // console.log(e.target.getAttribute('value'));
         const index = Number(e.target.getAttribute('value'));
-        console.log(this.state.tourNames, e.target.getAttribute('value'));
         const favorites = this.state.favorites.slice(0, index).concat(this.state.favorites.slice(index + 1));
         // console.log('newfav', favorites);
 
@@ -375,6 +388,8 @@ class App extends Component {
         console.log('here', this.state.favorites);
         localStorage.setItem("favorites", JSON.stringify(favorites));
     }
+
+    // displays alert asking for file type when user wants to download
 
     handleDownloadClick() {
         swal({
@@ -400,6 +415,8 @@ class App extends Component {
             }
         })
     }
+
+    // below functions create file in type requested by user and then download that file
 
     handleSaveAsJSON() {
         console.log('saving as json');

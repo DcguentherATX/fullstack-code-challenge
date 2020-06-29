@@ -5,9 +5,8 @@ import StarRatings from 'react-star-ratings';
 import convertToDollars from '../util';
 import RestaurantModal from './RestaurantModal';
 
-const Restaurant = (props) => {
+const Restaurant = ({ restaurant, addToCrawl }) => {
     // console.log(props);
-
     // I chose to use hooks here to show that I am familiar with them.
     
     const [showModal, setShowModal] = useState(false);
@@ -15,7 +14,6 @@ const Restaurant = (props) => {
     const handleShowModal = () => {
         setShowModal(true);
     }
-
     const handleCloseModal = () => {
         setShowModal(false);
     }
@@ -26,15 +24,15 @@ const Restaurant = (props) => {
         <div className="card-container">
             <Card style={{ width: '22rem' }}>
                 <div className="card-img-container">
-                    <Card.Img variant="top" src={props.restaurant.image_url} />
+                    <Card.Img variant="top" src={restaurant.image_url} />
                 </div>
                 <Card.Body>
-                    <Card.Title><strong>{props.restaurant.name}</strong></Card.Title>
+                    <Card.Title><strong>{restaurant.name}</strong></Card.Title>
                     <div className="rating-container">
                         <span className="rating">Rating:</span>
                         <span>
                             <StarRatings
-                                rating={props.restaurant.rating}
+                                rating={restaurant.rating}
                                 starRatedColor="#fe9720"
                                 starDimension="1rem"
                                 starSpacing=".1rem"
@@ -44,7 +42,7 @@ const Restaurant = (props) => {
                         </span>
                     </div>
                     <span>
-                        Price: {convertToDollars(props.restaurant.price)}
+                        Price: {convertToDollars(restaurant.price)}
                     </span>
                     <div className="card-buttons">
                         <Button variant="outline-light" onClick={handleShowModal}>
@@ -55,10 +53,10 @@ const Restaurant = (props) => {
                             show={showModal}
                             onHide={handleCloseModal}
                             handleClose={handleCloseModal}
-                            restaurant={props.restaurant}
-                            addToCrawl={props.addToCrawl}
+                            restaurant={restaurant}
+                            addToCrawl={addToCrawl}
                             />
-                        <Button variant="outline-light" value={props.restaurant.id} onClick={(e) => props.addToCrawl(e)}>
+                        <Button variant="outline-light" value={restaurant.id} onClick={(e) => addToCrawl(e)}>
                             Add to Tour
                         </Button>
                     </div>

@@ -8,17 +8,17 @@ import remove from '../../images/remove-button.png';
 
 const FavoritesList = (props) => {
     // console.log(props.fav[0]);
-    let listName = '';
-    let imageUrl = '';
-    let location = '';
-    let stops = 0;
+    let listName = (props.fav[props.fav.length - 1]);
+    let imageUrl = (props.fav[0].image_url);
+    let location = `${props.fav[0].location.city}, ${props.fav[0].location.state}`;
+    let stops = props.fav.length - 1;
 
-    if (props.fav.length > 0) {
-        listName = (props.fav[props.fav.length - 1]);
-        imageUrl = (props.fav[0].image_url);
-        location = `${props.fav[0].location.city}, ${props.fav[0].location.state}`;
-        stops = props.fav.length - 1;
-    };
+    // if (props.fav.length > 0) {
+        // listName = (props.fav[props.fav.length - 1]);
+        // imageUrl = (props.fav[0].image_url);
+        // location = `${props.fav[0].location.city}, ${props.fav[0].location.state}`;
+        // stops = props.fav.length - 1;
+    // };
 
     return (
         <Fade top cascade>

@@ -10,11 +10,11 @@ import downArrow from '../../images/down-arrow.png';
 import remove from '../../images/remove-button.png';
 
 
-const CrawlList = (props) => {
+const CrawlList = ({ crawl, deleteCrawlItem, swap }) => {
     // console.log(props);
     return (
         <div className="crawl-list">
-            {props.crawl.map((crawlItem, index) => (
+            {crawl.map((crawlItem, index) => (
                 <Fade right cascade key={index}>
                 <div className="crawl-item" key={index} >
                     <div className="crawl-info">
@@ -42,7 +42,7 @@ const CrawlList = (props) => {
                         </Tooltip>
                         }
                     >
-                    <img onClick={(e) => props.swap(e)} value="up" src={upArrow} alt="upArrow" />
+                    <img onClick={(e) => swap(e)} value="up" src={upArrow} alt="upArrow" />
                     </OverlayTrigger>
                     <OverlayTrigger 
                         key={'remove'}
@@ -52,7 +52,7 @@ const CrawlList = (props) => {
                                 Remove Item
                             </Tooltip>
                         }>
-                        <img onClick={(e) => props.deleteCrawlItem(e)} value="remove" src={remove} alt="remove-button" />
+                        <img onClick={(e) => deleteCrawlItem(e)} value="remove" src={remove} alt="remove-button" />
                         </OverlayTrigger>
                         <OverlayTrigger
                             key={'down'}
@@ -62,7 +62,7 @@ const CrawlList = (props) => {
                                     Move Item Down
                                 </Tooltip>
                             }>
-                            <img onClick={(e) => props.swap(e)} value="down" src={downArrow} alt="downArrow" />
+                            <img onClick={(e) => swap(e)} value="down" src={downArrow} alt="downArrow" />
                         </OverlayTrigger>
                     </div>                                   
                 </div>

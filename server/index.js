@@ -10,13 +10,14 @@ const createCsvWriter = require('csv-writer').createObjectCsvWriter;
 const pdf = require('html-pdf');
 const cors = require('cors');
 const pdfTemplate = require('./documents');
-// const PDFDocument = require('pdfkit');
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', express.static('public'));
+
+// route for pinging yelp api
 
 app.get('/api', (req, res) => {
     const { location, cuisine, radius } = req.query;
@@ -26,7 +27,7 @@ app.get('/api', (req, res) => {
         term: cuisine,
         location: location,
         radius: radius,
-        limit: 24,
+        limit: 50,
         categories: 'restaurants, all'
     };
 
@@ -39,6 +40,8 @@ app.get('/api', (req, res) => {
         console.log(err);
     })
 })
+
+// routes for creating/retrieving json, csv, and pdf files
 
 app.post('/create-json', (req, res) => {
     const jsonRecords = JSON.stringify(req.body.crawl);
@@ -79,7 +82,7 @@ app.post('/create-csv', (req, res) => {
 
     for (let i = 0; i < req.body.crawl.length; i++) {
         let current = req.body.crawl[i];
-        let stop = {
+        let tourStop = {
             _uuid: i + 1,
             id: current.id,
             name: current.name,
@@ -91,7 +94,7 @@ app.post('/create-csv', (req, res) => {
             display_phone: current.display_phone,
             resultIndex: current.resultIndex
         }
-        data.push(stop);
+        data.push(tourStop);
     }
     // console.log(data);
 
